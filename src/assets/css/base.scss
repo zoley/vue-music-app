@@ -1,4 +1,5 @@
 @import './variables';
+@import './mixin';
 /*公用基本样式*/
 .z-flex{display:flex;justify-content: flex-start;align-items: center;}
 .font-special{background: #fff;border-radius:2px;font-size:12px;padding:1px 4px;margin-right:5px;}
