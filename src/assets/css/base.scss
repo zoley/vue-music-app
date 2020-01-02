@@ -1,0 +1,19 @@
+@import './variables';
+/*公用基本样式*/
+.z-flex{display:flex;justify-content: flex-start;align-items: center;}
+.font-special{background: #fff;border-radius:2px;font-size:12px;padding:1px 4px;margin-right:5px;}
+.red-color{color:$red;}
+.blue-color{color:$blue;}
+.green-color{color:$green;}
+.orange-color{color:$orange;}
+.gray-color{color:$gray;}
+
+.font-special-bg{color: #fff;border-radius:2px;font-size:12px;padding:1px 3px;margin-right:5px;font-weight: 400;}
+.red-bg{background:$red;}
+.blue-bg{background:$blue;}
+.green-bg{background:$green;}
+.orange-bg{background:$orange;}
+.gray-bg{background:$gray;}
+
+.separate-line{box-sizing: border-box;border-top:1px solid rgba(7,17,27,0.1);border-bottom:1px solid rgba(7,17,27,0.1);background: #f3f5f7;width:100%;height:16px;}
+
