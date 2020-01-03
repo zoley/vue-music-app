@@ -6,7 +6,7 @@
       <router-link class="nav-item" to="/ranking">排行</router-link>
       <router-link class="nav-item" to="/search">搜索</router-link>
     </div>
-    <p @click="changeTheme">啊啊啊啊啊啊变色</p>
+    <p @click="changheme">啊啊啊啊啊啊变色</p>
     <div class="content">
       <keep-alive>
         <router-view></router-view>
@@ -15,7 +15,7 @@
   </div>
 </template>
 <script>
-import request from '@/utils/request';
+import { mapActions } from 'vuex'
 export default {
   data () {
     return {
@@ -23,31 +23,26 @@ export default {
     };
   },
   components: {},
-  created () {},
+  mounted () {
+  },
   methods: {
-    /**
-     * 获取header数据
-     */
-    getSellerData () {
-      request.get('/api/seller').then(res => {
-        this.seller = Object.assign({}, res.data);
-      });
-    },
+    ...mapActions('user', [
+      'changeTheme'
+    ]),
     /**
      * 改变主题
      */
-    changeTheme () {
-      window.document.documentElement.setAttribute('data-theme', 'theme1');
+    changheme () {
+      this.changeTheme('theme1');
     }
   }
 };
 </script>
 <style scoped lang="scss">
-@import '../../assets/css/mixin';
 .layout {
   max-width: 1024px;
   margin: 0 auto;
-  @include bg_color($background-color-theme);
+  @include bg_color($bg-color-theme);
   .nav {
     width: 100%;
     height: 40px;
