@@ -6,7 +6,21 @@
       <router-link class="nav-item" to="/ranking">排行</router-link>
       <router-link class="nav-item" to="/search">搜索</router-link>
     </div>
-    <p @click="changheme">啊啊啊啊啊啊变色</p>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <button @click="changheme">啊啊啊啊啊啊变色</button>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <button @click="changheme2">啊啊啊啊啊啊变色2</button>
     <div class="content">
       <keep-alive>
         <router-view></router-view>
@@ -34,6 +48,9 @@ export default {
      */
     changheme () {
       this.changeTheme('theme1');
+    },
+    changheme2 () {
+      this.changeTheme('theme');
     }
   }
 };
