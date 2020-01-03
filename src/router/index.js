@@ -13,13 +13,13 @@ const routes = [
   },
   {
     path: '/',
-    redirect:'/recommend',
+    redirect: '/recommend',
     component: Layout,
-    children:[
+    children: [
       {
         path: '/recommend',
         name: 'recommend',
-        component: Recommend,
+        component: Recommend
       },
       {
         path: '/ranking',
@@ -35,14 +35,19 @@ const routes = [
         path: '/search',
         name: 'search',
         component: () => import('../views/search/index')
-      },
+      }
     ]
+  },
+  {
+    path: '/mine',
+    name: 'mine',
+    component: () => import('../views/mine/index')
   },
   { path: '*', redirect: '/404', hidden: true }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  // mode: 'history',
   base: process.env.BASE_URL,
   routes
 })

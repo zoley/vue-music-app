@@ -1,5 +1,5 @@
 import { logout } from '../../api/user'
-import { changeTheme } from './type'
+import { CHANGE_THEME_ACT } from './type'
 
 const user = {
   namespaced: true,
@@ -9,10 +9,7 @@ const user = {
   getters: {
   },
   mutations: {
-    SET_TOKEN: (state, token) => {
-      state.token = token
-    },
-    CHANGE_THEME: (state, payload) => {
+    CHANGE_THEME_MUT: (state, payload) => {
       state.dataTheme = payload;
       document.documentElement.setAttribute('data-theme', payload);
     }
@@ -23,7 +20,6 @@ const user = {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('SET_TOKEN', undefined)
-          commit('SAVE_USER_INFO', {})
           resolve()
         }).catch(error => {
           reject(error)
@@ -31,9 +27,9 @@ const user = {
       })
     },
     // 改变主题颜色
-    [changeTheme] ({ commit, state }, data) {
+    [CHANGE_THEME_ACT] ({ commit, state }, data) {
       return new Promise((resolve, reject) => {
-        commit('CHANGE_THEME', data);
+        commit('CHANGE_THEME_MUT', data);
         resolve();
       })
     }

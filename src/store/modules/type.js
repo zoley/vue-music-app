@@ -1,1 +1,1 @@
-export const changeTheme = 'changeTheme';
+export const CHANGE_THEME_ACT = 'CHANGE_THEME_ACT';
