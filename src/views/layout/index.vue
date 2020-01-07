@@ -5,7 +5,7 @@
         <span class="iconfont i-mouse"></span>
       </div>
       <span class="title">Smile Music</span>
-      <span class="user iconfont i-user"></span>
+      <span @click="viewMine" class="user iconfont i-user"></span>
     </div>
     <div class="nav z-flex">
       <router-link class="nav-item" to="/recommend">推荐</router-link>
@@ -32,6 +32,12 @@ export default {
   mounted () {
   },
   methods: {
+    /**
+     * 跳转我的页面
+     */
+    viewMine () {
+      this.$router.push({ path: '/mine' });
+    }
   }
 };
 </script>
@@ -47,7 +53,8 @@ export default {
     position:relative;
     height:60px;
     box-sizing: border-box;
-    border-bottom:1px solid #343434;
+    border-bottom:1px solid;
+    @include border_color($border-color-theme);
     @include font_size($font-medium);
     @include font_color($font-color-theme-active);
     .portrait-wrap{

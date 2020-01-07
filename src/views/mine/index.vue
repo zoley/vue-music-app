@@ -18,6 +18,12 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped lang="scss">
+  .mine{
+    max-width: 1024px;
+    min-height: 100vh;
+    margin: 0 auto;
+    @include bg_color($bg-color-theme);
+    @include font_color($font-color-theme);
+  }
 </style>

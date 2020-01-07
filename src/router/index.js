@@ -15,6 +15,7 @@ const routes = [
     path: '/',
     redirect: '/recommend',
     component: Layout,
+    name: 'layout',
     children: [
       {
         path: '/recommend',

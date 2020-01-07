@@ -15,3 +15,15 @@
     background-color:$bg-color-theme1;
   }
 }
+
+@mixin border_color($color){
+  border-color:$color;
+  [data-theme="theme1"] & {
+    border-color:$border-color-theme1;
+  }
+}
+
+
+
+
+
