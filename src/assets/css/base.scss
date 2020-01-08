@@ -2,14 +2,13 @@
 @import './mixin';
 /*公用基本样式*/
 .z-flex{display:flex;justify-content: flex-start;align-items: center;}
-.font-special{background: #fff;border-radius:2px;font-size:12px;padding:1px 4px;margin-right:5px;}
+
 .red-color{color:$red;}
 .blue-color{color:$blue;}
 .green-color{color:$green;}
 .orange-color{color:$orange;}
 .gray-color{color:$gray;}
 
-.font-special-bg{color: #fff;border-radius:2px;font-size:12px;padding:1px 3px;margin-right:5px;font-weight: 400;}
 .red-bg{background:$red;}
 .blue-bg{background:$blue;}
 .green-bg{background:$green;}

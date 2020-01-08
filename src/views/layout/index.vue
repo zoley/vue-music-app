@@ -1,17 +1,11 @@
 <template>
   <div class="layout">
-    <div class="header z-flex">
-      <div class="portrait-wrap">
-        <span class="iconfont i-mouse"></span>
-      </div>
-      <span class="title">Smile Music</span>
-      <span @click="viewMine" class="user iconfont i-user"></span>
-    </div>
+    <customNav :right="rightCustom" :rightFn="viewMine" :left="false"/>
     <div class="nav z-flex">
-      <router-link class="nav-item" to="/recommend">推荐</router-link>
-      <router-link class="nav-item" to="/singer">歌手</router-link>
-      <router-link class="nav-item" to="/ranking">排行</router-link>
-      <router-link class="nav-item" to="/search">搜索</router-link>
+      <router-link class="nav-item" to="/recommend"><span>推荐</span></router-link>
+      <router-link class="nav-item" to="/singer"><span>歌手</span></router-link>
+      <router-link class="nav-item" to="/ranking"><span>排行</span></router-link>
+      <router-link class="nav-item" to="/search"><span>搜索</span></router-link>
     </div>
     <div class="content">
       <keep-alive>
@@ -21,14 +15,16 @@
   </div>
 </template>
 <script>
-
+import customNav from '@/components/customNav'
 export default {
   data () {
     return {
-      seller: {}
+      rightCustom: '<span class="iconfont i-user" style="font-size:24px;"></span>'
     };
   },
-  components: {},
+  components: {
+    customNav
+  },
   mounted () {
   },
   methods: {
@@ -86,7 +82,7 @@ export default {
       line-height: 40px;
       @include font_color($font-color-theme);
       &.router-link-active {
-        color: rgb(240, 20, 20);
+        @include font_color($font-color-theme-active);
       }
     }
   }

@@ -1,5 +1,6 @@
 <template>
   <div class="mine">
+    <customNav :title="title"/>
     <div class="z-flex">
       <div class="img-wrap">
         <span class="iconfont i-mouse"></span>
@@ -13,8 +14,21 @@
 </template>
 
 <script>
+import customNav from '@/components/customNav'
 export default {
+  data () {
+    return {
+      title: '我的'
+    };
+  },
+  components: {
+    customNav
+  },
+  mounted () {
+  },
+  methods: {
 
+  }
 }
 </script>
 
