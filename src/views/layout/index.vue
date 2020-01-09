@@ -2,10 +2,8 @@
   <div class="layout">
     <customNav :right="rightCustom" :rightFn="viewMine" :left="false"/>
     <div class="nav z-flex">
-      <router-link class="nav-item" to="/recommend"><span>推荐</span></router-link>
-      <router-link class="nav-item" to="/singer"><span>歌手</span></router-link>
-      <router-link class="nav-item" to="/ranking"><span>排行</span></router-link>
-      <router-link class="nav-item" to="/search"><span>搜索</span></router-link>
+      <router-link v-for="(item,index) in navList" :key="index" class="nav-item" :to="item.path" @click.native="viewPage(index)">{{item.text}}</router-link>
+      <b class="slide-line" :style="'transform:translate3d('+translateX+'vw,0,0)'"></b>
     </div>
     <div class="content">
       <keep-alive>
@@ -19,7 +17,26 @@ import customNav from '@/components/customNav'
 export default {
   data () {
     return {
-      rightCustom: '<span class="iconfont i-user" style="font-size:24px;"></span>'
+      navList: [
+        {
+          text: '推荐',
+          path: '/recommend'
+        },
+        {
+          text: '歌手',
+          path: '/singer'
+        },
+        {
+          text: '排行',
+          path: '/ranking'
+        },
+        {
+          text: '搜索',
+          path: '/search'
+        }
+      ],
+      rightCustom: '<span class="iconfont i-user" style="font-size:24px;"></span>',
+      translateX: 7
     };
   },
   components: {
@@ -33,6 +50,13 @@ export default {
      */
     viewMine () {
       this.$router.push({ path: '/mine' });
+    },
+    /**
+     * 跳转页面
+     */
+    viewPage (i) {
+      console.log(i)
+      this.translateX = i * 25 + 7;
     }
   }
 };
@@ -44,34 +68,12 @@ export default {
   margin: 0 auto;
   @include bg_color($bg-color-theme);
   @include font_color($font-color-theme);
-  .header {
-    justify-content: center;
-    position:relative;
-    height:60px;
-    box-sizing: border-box;
-    border-bottom:1px solid;
-    @include border_color($border-color-theme);
-    @include font_size($font-medium);
-    @include font_color($font-color-theme-active);
-    .portrait-wrap{
-      margin-right:$xs;
-      .iconfont{
-        font-size:40px;
-      }
-    }
-    .user{
-      position: absolute;
-      top:2px;
-      right:0;
-      padding:$sm;
-      @include font_size($font-vast);
-    }
-  }
   .nav {
     width: 100%;
     height: 40px;
     border-bottom: 1px solid rgba(7, 17, 27, 0.1);
     box-sizing: border-box;
+    position:relative;
     .nav-item {
       flex: 1;
       text-align: center;
@@ -84,6 +86,15 @@ export default {
       &.router-link-active {
         @include font_color($font-color-theme-active);
       }
+    }
+    .slide-line{
+      position: absolute;
+      left:0;
+      bottom:0;
+      height:2px;
+      width:11vw;
+      transition: 0.2s all ease;
+      @include bg_color($font-color-theme-active);
     }
   }
 }
