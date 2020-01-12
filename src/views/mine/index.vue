@@ -7,7 +7,7 @@
     </div>
    <transition name="shift">
      <div class="theme-wrap" v-if="isShowThemeDialog">
-        <theme/>
+        <theme @closeThemeDialog="closeThemeDialog"/>
      </div>
    </transition>
   </div>
@@ -32,6 +32,9 @@ export default {
   methods: {
     showThemeDialog () {
       this.isShowThemeDialog = true;
+    },
+    closeThemeDialog () {
+      this.isShowThemeDialog = false;
     }
   }
 }

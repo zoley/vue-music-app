@@ -9,6 +9,12 @@
     color:$font-color-theme1;
   }
 }
+@mixin font_active_color($color){/*通过该函数设置字体颜色，后期方便统一管理；*/
+	color:$color;
+  [data-theme="theme1"] & {
+    color:$font-color-theme-active1;
+  }
+}
 @mixin bg_color($color){/*通过该函数设置主题颜色，后期方便统一管理；*/
   background-color:$color;
   [data-theme="theme1"] & {
@@ -22,7 +28,12 @@
     border-color:$border-color-theme1;
   }
 }
-
+@mixin border_active_color($color){
+  border-color:$color;
+  [data-theme="theme1"] & {
+    border-color:$font-color-theme-active1;
+  }
+}
 
 
 

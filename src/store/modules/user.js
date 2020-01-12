@@ -4,6 +4,17 @@ import { CHANGE_THEME_ACT } from './type'
 const user = {
   namespaced: true,
   state: {
+    themes: [{
+      name: '玄潭黑',
+      code: 'theme',
+      color: '#212121',
+      checked: true
+    }, {
+      name: '霜荼白',
+      code: 'theme1',
+      color: '#fff',
+      checked: false
+    }],
     dataTheme: 'theme'
   },
   getters: {
@@ -11,6 +22,13 @@ const user = {
   mutations: {
     CHANGE_THEME_MUT: (state, payload) => {
       state.dataTheme = payload;
+      state.themes.forEach((item) => {
+        if (Object.is(item.code, payload)) {
+          item.checked = true;
+        } else {
+          item.checked = false;
+        }
+      })
       document.documentElement.setAttribute('data-theme', payload);
     }
   },

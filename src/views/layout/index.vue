@@ -3,7 +3,7 @@
     <customNav :right="rightCustom" :rightFn="viewMine" :left="false"/>
     <div class="nav z-flex">
       <router-link v-for="(item,index) in navList" :key="index" class="nav-item" :to="item.path" @click.native="viewPage(index)">{{item.text}}</router-link>
-      <b class="slide-line" :style="'transform:translate3d('+translateX+'vw,0,0)'"></b>
+      <b class="slide-line" :style="'transform:translate3d('+(translateX / 0.11)+'%,0,0)'"></b>
     </div>
     <div class="content">
       <keep-alive>
@@ -55,7 +55,6 @@ export default {
      * 跳转页面
      */
     viewPage (i) {
-      console.log(i)
       this.translateX = i * 25 + 7;
     }
   }
@@ -84,7 +83,7 @@ export default {
       line-height: 40px;
       @include font_color($font-color-theme);
       &.router-link-active {
-        @include font_color($font-color-theme-active);
+        @include font_active_color($font-color-theme-active);
       }
     }
     .slide-line{
@@ -92,7 +91,7 @@ export default {
       left:0;
       bottom:0;
       height:2px;
-      width:11vw;
+      width:11%;
       transition: 0.2s all ease;
       @include bg_color($font-color-theme-active);
     }
