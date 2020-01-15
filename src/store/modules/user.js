@@ -1,4 +1,4 @@
-import { logout } from '../../api/user'
+// import { logout } from '../../api/recommend'
 import { CHANGE_THEME_ACT } from './type'
 
 const user = {
@@ -36,12 +36,12 @@ const user = {
     // 用户名登录
     LogOut ({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
-          commit('SET_TOKEN', undefined)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
+        // logout(state.token).then(() => {
+        //   commit('SET_TOKEN', undefined)
+        //   resolve()
+        // }).catch(error => {
+        //   reject(error)
+        // })
       })
     },
     // 改变主题颜色

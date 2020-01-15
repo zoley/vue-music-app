@@ -7,41 +7,27 @@ function resolve (dir) {
 }
 
 const name = 'vue-music-app' // page title
-
-// var app = express()
-
-// var appData = require('./data.json');
-// var seller = appData.seller;
-// var goods = appData.goods;
-// var ratings = appData.ratings;
-
+const port = 9527 // dev port
+// var app = express();
 // var apiRoutes = express.Router();
 
-// apiRoutes.get('/seller', function (req, res) {
-//   res.send({
-//     code: 0,
-//     data: seller
-//   });
-// });
-
-// apiRoutes.get('/goods', function (req, res) {
-//   res.send({
-//     code: 0,
-//     data: goods
-//   });
-// });
-
-// apiRoutes.get('/ratings', function (req, res) {
-//   res.send({
-//     code: 0,
-//     data: ratings
-//   });
-// });
+// apiRoutes.get('/getDiscList', function (req, res) {
+//   var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
+//   axios.get(url, {
+//     headers: {
+//       referer: 'https://c.y.qq.com/',
+//       host: 'c.y.qq.com'
+//     },
+//     params: req.query
+//   }).then((response) => {
+//     res.json(response.data)
+//   }).catch((e) => {
+//     console.log(e)
+//   })
+// })
 
 // app.use('/api', apiRoutes);
-// app.listen(3000);
-
-const port = 9527 // dev port
+// app.listen(port);
 
 module.exports = {
   publicPath: '/',
@@ -57,10 +43,26 @@ module.exports = {
       errors: true
     },
     proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        ws: true,
-        changeOrigin: true
+      '/api': { // 代理url关键字
+        target: 'https://c.y.qq.com', // 需要代理的地址
+        secure: false, // 如果是https接口，需要配置这个参数
+        changeOrigin: true, // 是否跨域
+        pathRewrite: {
+          '^/api': ''
+        }
+      },
+      '/pc': { // 代理url关键字
+        target: 'https://u.y.qq.com', // 需要代理的地址
+        secure: false, // 如果是https接口，需要配置这个参数
+        changeOrigin: true, // 是否跨域
+        pathRewrite: {
+          '^/pc': ''
+        },
+        // 突破host和origin的限制
+        headers: {
+          referer: 'https://y.qq.com/',
+          origin: 'https://y.qq.com'
+        }
       }
     }
   },

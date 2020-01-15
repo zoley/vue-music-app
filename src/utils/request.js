@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { ERR_OK } from '@/api/config'
 const service = axios.create({
   baseURL: '/',
   timeout: 3000
@@ -31,7 +32,7 @@ service.interceptors.response.use(
     // console.log(response);
     const res = response.data
     const { code } = res
-    if (Object.is(code, 0)) {
+    if (Object.is(code, ERR_OK)) {
       return Promise.resolve(res)
     } else {
       return Promise.reject(res)
