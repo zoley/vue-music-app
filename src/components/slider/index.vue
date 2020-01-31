@@ -84,7 +84,6 @@ export default {
       })
       this.slider.on('scrollEnd', () => {
         let pageIndex = this.slider.getCurrentPage().pageX;
-        console.log(pageIndex)
         this.currentPageIndex = pageIndex;
         if (this.autoPlay) { // 继续轮播
           clearTimeout(this.timer)
@@ -107,12 +106,8 @@ export default {
      * 轮播
      */
     _play () {
-      let pageIndex = this.currentPageIndex + 1;
-      if (pageIndex === 5) {
-        pageIndex = 0;
-      }
       this.timer = setTimeout(() => {
-        this.slider.goToPage(pageIndex, 0, 400);
+        this.slider.next();
       }, this.interval)
     }
   }
@@ -122,6 +117,7 @@ export default {
 <style lang='scss' scoped>
 .slider{
   position:relative;
+  overflow:hidden;
   .slider-group{
     position:relative;
     overflow:hidden;
