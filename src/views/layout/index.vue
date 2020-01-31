@@ -93,7 +93,7 @@ export default {
       height:2px;
       width:11%;
       transition: 0.2s all ease;
-      @include bg_color($font-color-theme-active);
+      @include bg_foot_active_color($font-color-theme-active);
     }
   }
 }

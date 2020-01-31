@@ -22,6 +22,19 @@
   }
 }
 
+@mixin bg_foot_color($color){
+  background-color:$color;
+  [data-theme="theme1"] & {
+    background-color:$font-color-theme1;
+  }
+}
+
+@mixin bg_foot_active_color($color){
+  background-color:$color;
+  [data-theme="theme1"] & {
+    background-color:$font-color-theme-active1;
+  }
+}
 @mixin border_color($color){
   border-color:$color;
   [data-theme="theme1"] & {

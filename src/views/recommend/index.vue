@@ -1,8 +1,12 @@
 <template>
   <div class="recommend-wrap">
-    <div class="slider-box">
+    <div class="slider-box" v-if="recommends.length">
       <slider>
-        <div>123</div>
+        <div v-for="(item,index) in recommends" :key="index" class="slider-item">
+          <a :href="item.linkUrl">
+            <img :src="item.picUrl" alt="">
+          </a>
+        </div>
       </slider>
     </div>
   </div>
@@ -15,7 +19,8 @@ import slider from '@/components/slider'
 export default {
   data () {
     return {
-      recommends: []
+      recommends: [],
+      discList: []
     }
   },
   mounted () {
@@ -30,15 +35,13 @@ export default {
     // 请求轮播图片并初始化this.recommends
     _getRecommend () {
       getBanner().then((res) => {
-        console.log(res);
-        this.recommends = res.data.slider
+        this.recommends = res.data.slider;
       })
     },
     // 请求推荐歌单并初始化this.discList
     _getSheetList () {
       getSheetList().then((res) => {
-        console.log(res);
-        this.discList = res.data.list
+        this.discList = res.playlist.data.v_playlist;
       })
     }
   }
