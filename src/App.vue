@@ -21,7 +21,7 @@ export default {
     })
   },
   mounted () {
-    document.documentElement.setAttribute('data-theme', this.dataTheme);
+    document.documentElement.setAttribute('data-theme', this.dataTheme)
   }
 }
 </script>
