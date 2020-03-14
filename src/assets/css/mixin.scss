@@ -9,6 +9,12 @@
     color:$font-color-theme1;
   }
 }
+@mixin font_sec_color($color){/*通过该函数设置字体颜色，后期方便统一管理；*/
+	color:$color;
+  [data-theme="theme1"] & {
+    color:$font-color-theme-sec1;
+  }
+}
 @mixin font_active_color($color){/*通过该函数设置字体颜色，后期方便统一管理；*/
 	color:$color;
   [data-theme="theme1"] & {

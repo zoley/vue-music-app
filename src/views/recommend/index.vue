@@ -9,6 +9,20 @@
         </div>
       </slider>
     </div>
+    <div class="recommend-list">
+      <h3 class="h3">KTV热歌推荐</h3>
+      <ul class="ul">
+        <li class="li z-flex" v-for="(item,index) in discList" :key="index">
+          <div class="media-img">
+            <img v-if="item.cover_url_small" :src="item.cover_url_small">
+          </div>
+          <div class="media-content">
+            <h3>{{item.creator_info.nick}}</h3>
+            <p>{{item.title}}</p>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -23,8 +37,10 @@ export default {
       discList: []
     }
   },
-  mounted () {
+  created () {
+    // 轮播图
     this._getRecommend()
+    // 歌单列表
     this._getSheetList()
   },
   components: {
@@ -49,5 +65,39 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-
+  .recommend-wrap{
+    .recommend-list{
+      >.h3{
+        text-align: center;
+        margin:$sm 0;
+        @include font_active_color($font-color-theme-active);
+      }
+      .li{
+        padding:$xs $sm;
+        .media-img{
+          width:70px;
+          height:70px;
+          border-radius:$radius;
+          overflow: hidden;
+          background: #f2f2f2;
+          margin-right:$sm;
+          img{
+            width:100%;
+            height:100%;
+            vertical-align: top;
+          }
+        }
+        .media-content{
+          flex:1;
+          h3{
+            margin-bottom:$xs;
+            @include font_sec_color($font-color-theme-sec);
+          }
+          p{
+            line-height: 20px;
+          }
+        }
+      }
+    }
+  }
 </style>
