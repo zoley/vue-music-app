@@ -24,8 +24,8 @@ export default {
     }
   },
   mounted () {
-    this._getRecommend();
-    this._getSheetList();
+    this._getRecommend()
+    this._getSheetList()
   },
   components: {
     slider
@@ -35,13 +35,13 @@ export default {
     // 请求轮播图片并初始化this.recommends
     _getRecommend () {
       getBanner().then((res) => {
-        this.recommends = res.data.slider;
+        this.recommends = res.data.slider
       })
     },
     // 请求推荐歌单并初始化this.discList
     _getSheetList () {
       getSheetList().then((res) => {
-        this.discList = res.playlist.data.v_playlist;
+        this.discList = res.playlist.data.v_playlist
       })
     }
   }

@@ -21,15 +21,15 @@ const user = {
   },
   mutations: {
     CHANGE_THEME_MUT: (state, payload) => {
-      state.dataTheme = payload;
+      state.dataTheme = payload
       state.themes.forEach((item) => {
         if (Object.is(item.code, payload)) {
-          item.checked = true;
+          item.checked = true
         } else {
-          item.checked = false;
+          item.checked = false
         }
       })
-      document.documentElement.setAttribute('data-theme', payload);
+      document.documentElement.setAttribute('data-theme', payload)
     }
   },
   actions: {
@@ -47,8 +47,8 @@ const user = {
     // 改变主题颜色
     [CHANGE_THEME_ACT] ({ commit, state }, data) {
       return new Promise((resolve, reject) => {
-        commit('CHANGE_THEME_MUT', data);
-        resolve();
+        commit('CHANGE_THEME_MUT', data)
+        resolve()
       })
     }
   }

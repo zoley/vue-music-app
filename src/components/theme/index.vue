@@ -36,10 +36,10 @@ export default {
      */
     changeTheme (index) {
       this.themes.forEach(val => {
-        val.checked = false;
+        val.checked = false
       })
-      this.themes[index].checked = true;
-      this.CHANGE_THEME_ACT(this.themes[index].code);
+      this.themes[index].checked = true
+      this.CHANGE_THEME_ACT(this.themes[index].code)
     },
     /**
      * 返回上一层、巴特不是路由跳转

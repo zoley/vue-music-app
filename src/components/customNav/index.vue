@@ -25,7 +25,7 @@ export default {
     left: {
       type: Boolean,
       default () {
-        return true;
+        return true
       }
     },
     leftFn: {
@@ -34,13 +34,13 @@ export default {
     title: {
       type: String,
       default () {
-        return 'Smile Music';
+        return 'Smile Music'
       }
     },
     right: {
       type: String,
       default () {
-        return '';
+        return ''
       }
     },
     rightFn: {
@@ -49,7 +49,7 @@ export default {
     }
   },
   data () {
-    return {};
+    return {}
   },
   mounted () {},
   computed: {},
@@ -58,10 +58,10 @@ export default {
      * 返回上一级
      */
     backFn () {
-      this.leftFn ? this.leftFn() : this.$router.back(-1);
+      this.leftFn ? this.leftFn() : this.$router.back(-1)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

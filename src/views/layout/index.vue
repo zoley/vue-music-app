@@ -37,28 +37,37 @@ export default {
       ],
       rightCustom: '<span class="iconfont i-user" style="font-size:24px;"></span>',
       translateX: 7
-    };
+    }
   },
   components: {
     customNav
   },
   mounted () {
+    // 设置导航下划线与路由匹配
+    this.findRouteIndex()
   },
   methods: {
+    /**
+     * 找到当前路由对应的导航索引
+     */
+    findRouteIndex () {
+      let index = this.navList.findIndex(item => Object.is(item.path, this.$route.path))
+      this.viewPage(index)
+    },
     /**
      * 跳转我的页面
      */
     viewMine () {
-      this.$router.push({ path: '/mine' });
+      this.$router.push({ path: '/mine' })
     },
     /**
      * 跳转页面
      */
     viewPage (i) {
-      this.translateX = i * 25 + 7;
+      this.translateX = i * 25 + 7
     }
   }
-};
+}
 </script>
 <style scoped lang="scss">
 .layout {

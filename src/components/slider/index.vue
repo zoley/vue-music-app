@@ -34,11 +34,11 @@ export default {
   },
   mounted () {
     setTimeout(() => {
-      this._setSlideWidth();
-      this._initDots();
-      this._initSlider();
+      this._setSlideWidth()
+      this._initDots()
+      this._initSlider()
       if (this.autoPlay) {
-        this._play();
+        this._play()
       }
     }, 20)
     window.addEventListener('resize', () => { // 视口改变自适应
@@ -55,18 +55,18 @@ export default {
      * 設置輪播寬度
      */
     _setSlideWidth (isResize) {
-      this.children = this.$refs.sliderGroup.children;
-      let width = 0;
-      let sliderWidth = this.$refs.slider.clientWidth;
+      this.children = this.$refs.sliderGroup.children
+      let width = 0
+      let sliderWidth = this.$refs.slider.clientWidth
       for (let i = 0; i < this.children.length; i++) {
-        let child = this.children[i];
-        child.style.width = sliderWidth + 'px';
-        width += sliderWidth;
+        let child = this.children[i]
+        child.style.width = sliderWidth + 'px'
+        width += sliderWidth
       }
       if (this.loop && !isResize) {
-        width += 2 * sliderWidth; // 如果是循环播放，在首尾各多一个，所以是本例中是（5+2）倍大小
+        width += 2 * sliderWidth // 如果是循环播放，在首尾各多一个，所以是本例中是（5+2）倍大小
       }
-      this.$refs.sliderGroup.style.width = width + 'px';
+      this.$refs.sliderGroup.style.width = width + 'px'
     },
     /**
      * 初始化slider组件
@@ -83,8 +83,8 @@ export default {
         }
       })
       this.slider.on('scrollEnd', () => {
-        let pageIndex = this.slider.getCurrentPage().pageX;
-        this.currentPageIndex = pageIndex;
+        let pageIndex = this.slider.getCurrentPage().pageX
+        this.currentPageIndex = pageIndex
         if (this.autoPlay) { // 继续轮播
           clearTimeout(this.timer)
           this._play()
@@ -100,14 +100,14 @@ export default {
      * 初始化点点
      */
     _initDots () {
-      this.dots = new Array(this.children.length);
+      this.dots = new Array(this.children.length)
     },
     /**
      * 轮播
      */
     _play () {
       this.timer = setTimeout(() => {
-        this.slider.next();
+        this.slider.next()
       }, this.interval)
     }
   }

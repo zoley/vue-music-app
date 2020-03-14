@@ -21,7 +21,7 @@ export default {
     return {
       title: '我的',
       isShowThemeDialog: false
-    };
+    }
   },
   components: {
     customNav,
@@ -31,10 +31,10 @@ export default {
   },
   methods: {
     showThemeDialog () {
-      this.isShowThemeDialog = true;
+      this.isShowThemeDialog = true
     },
     closeThemeDialog () {
-      this.isShowThemeDialog = false;
+      this.isShowThemeDialog = false
     }
   }
 }
