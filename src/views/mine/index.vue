@@ -1,6 +1,6 @@
 <template>
   <div class="mine">
-    <customNav :title="title"/>
+    <custom-nav :title="title"/>
     <div class="cell z-flex" @click="showThemeDialog">
       <span class="cell-name">主题颜色</span>
       <span class="iconfont i-right"></span>
@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import customNav from '@/components/customNav'
-import theme from '@/components/theme'
+import CustomNav from '@/components/CustomNav'
+import Theme from '@/components/Theme'
 export default {
   data () {
     return {
@@ -24,8 +24,8 @@ export default {
     }
   },
   components: {
-    customNav,
-    theme
+    CustomNav,
+    Theme
   },
   mounted () {
   },

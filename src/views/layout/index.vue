@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <customNav :right="rightCustom" :rightFn="viewMine" :left="false"/>
+    <custom-nav :right="rightCustom" :rightFn="viewMine" :left="false"/>
     <div class="nav z-flex">
       <router-link v-for="(item,index) in navList" :key="index" class="nav-item" :to="item.path" @click.native="viewPage(index)">{{item.text}}</router-link>
       <b class="slide-line" :style="'transform:translate3d('+(translateX / 0.11)+'%,0,0)'"></b>
@@ -13,7 +13,7 @@
   </div>
 </template>
 <script>
-import customNav from '@/components/customNav'
+import CustomNav from '@/components/CustomNav'
 export default {
   data () {
     return {
@@ -40,7 +40,7 @@ export default {
     }
   },
   components: {
-    customNav
+    CustomNav
   },
   mounted () {
     // 设置导航下划线与路由匹配

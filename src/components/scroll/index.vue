@@ -9,7 +9,7 @@
 // https://better-scroll.github.io/docs/zh-CN/guide/#betterscroll-是什么
 import BScroll from 'better-scroll'
 export default {
-  name: 'scroll',
+  name: 'Scroll',
   props: {
     /**
      * 当 probeType 为 1 的时候，会非实时（屏幕滑动超过一定时间后）派发scroll 事件；
@@ -86,12 +86,10 @@ export default {
      */
     _initScroll () {
       let that = this
-      if (that.$refs.scrollWrapper) return
       that.scroll = new BScroll(that.$refs.scrollWrapper, {
         probeType: that.probeType,
         click: that.click
       })
-      console.log(that.scroll)
       if (that.listenScroll) {
         that.scroll.on('scroll', (pos) => {
           that.$emit('scroll', pos)

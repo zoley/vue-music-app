@@ -1,12 +1,12 @@
 <template>
   <div class="recommend-wrap">
-    <scroll :scroll-data="discList" class="recommend-content">
+    <scroll :scroll-data="discList" class="recommend-content" ref="scroll">
       <div>
         <div class="slider-box" v-if="recommends.length">
           <slider>
             <div v-for="(item,index) in recommends" :key="index" class="slider-item">
               <a :href="item.linkUrl">
-                <img :src="item.picUrl" alt="">
+                <img @load="loadImage" :src="item.picUrl" alt="">
               </a>
             </div>
           </slider>
@@ -14,7 +14,7 @@
         <div class="recommend-list">
           <h3 class="h3">KTV热歌推荐</h3>
           <ul class="ul">
-            <li class="li z-flex" v-for="(item,index) in discList" :key="index">
+            <li class="li z-flex" v-for="(item,index) in discList" :key="index" v-fb>
               <div class="media-img">
                 <img v-lazy="item.cover_url_small">
               </div>
@@ -27,14 +27,18 @@
         </div>
       </div>
     </scroll>
+    <div class="loading-container" v-show="discList.length<1">
+      <loading/>
+    </div>
   </div>
 </template>
 
 <script>
 
 import { getBanner, getSheetList } from '@/api/recommend'
-import slider from '@/components/slider'
-import scroll from '@/components/scroll'
+import Slider from '@/components/Slider'
+import Scroll from '@/components/Scroll'
+import Loading from '@/components/Loading'
 export default {
   data () {
     return {
@@ -49,8 +53,9 @@ export default {
     this._getSheetList()
   },
   components: {
-    slider,
-    scroll
+    Slider,
+    Scroll,
+    Loading
   },
   computed: {},
   methods: {
@@ -65,6 +70,15 @@ export default {
       getSheetList().then((res) => {
         this.discList = res.playlist.data.v_playlist
       })
+    },
+    /*
+    * 判断图片是加载，从而刷新scroll--图片高度一致，仅需调用一次
+    */
+    loadImage () {
+      if (!this.imgChecked) {
+        this.imgChecked = true
+        this.$refs.scroll.refresh()
+      }
     }
   }
 }
@@ -109,6 +123,12 @@ export default {
         }
       }
     }
-
+    .loading-container{
+      position:fixed;
+      width:100%;
+      top:50%;
+      left:0;
+      transform: translateY(-50%);
+    }
   }
 </style>

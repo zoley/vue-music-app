@@ -21,6 +21,7 @@
 
 <script>
 export default {
+  name: 'CustomNav',
   props: {
     left: {
       type: Boolean,

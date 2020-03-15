@@ -1,6 +1,6 @@
 <template>
   <div class="theme">
-    <customNav :title="title" :leftFn="leftBackFn"/>
+    <custom-nav :title="title" :leftFn="leftBackFn"/>
     <ul>
       <li class="cell-li z-flex" v-for="(v,k) in themes" :key="k" @click="changeTheme(k)">
         <span class="text">{{v.name}} <b :style="'background:'+v.color"></b></span>
@@ -11,9 +11,10 @@
 </template>
 
 <script>
-import customNav from '@/components/customNav'
+import CustomNav from '@/components/CustomNav'
 import { mapState, mapActions } from 'vuex'
 export default {
+  name: 'Theme',
   data () {
     return {
       title: '设置主题'
@@ -25,7 +26,7 @@ export default {
     })
   },
   components: {
-    customNav
+    CustomNav
   },
   methods: {
     ...mapActions('user', [
