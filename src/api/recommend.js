@@ -61,8 +61,7 @@ export function getSheetList () {
       //   },
       //   'module': 'playlist.PlayListPlazaServer'
       // }
-    }),
-    ...commonParams
+    })
   })
   return request({
     method: 'get',
