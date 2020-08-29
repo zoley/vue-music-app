@@ -1,33 +1,40 @@
 
 @import "./variables";/*引入配置*/
-@mixin font_size($size){/*通过该函数设置字体大小，后期方便统一管理；*/
+
+/*字体大小*/
+@mixin font_size($size){
   font-size:$size;
 }
-@mixin font_color($color){/*通过该函数设置字体颜色，后期方便统一管理；*/
+@mixin font_color($color){
 	color:$color;
   [data-theme="theme1"] & {
     color:$font-color-theme1;
   }
 }
-@mixin font_sec_color($color){/*通过该函数设置字体颜色，后期方便统一管理；*/
+@mixin font_sec_color($color){
 	color:$color;
   [data-theme="theme1"] & {
     color:$font-color-theme-sec1;
   }
 }
-@mixin font_active_color($color){/*通过该函数设置字体颜色，后期方便统一管理；*/
+@mixin font_active_color($color){
 	color:$color;
   [data-theme="theme1"] & {
     color:$font-color-theme-active1;
   }
 }
-@mixin bg_color($color){/*通过该函数设置主题颜色，后期方便统一管理；*/
+@mixin bg_color($color){
   background-color:$color;
   [data-theme="theme1"] & {
     background-color:$bg-color-theme1;
   }
 }
-
+@mixin bg_sec_color($color){
+  background-color:$color;
+  [data-theme="theme1"] & {
+    background-color:$bg-color-theme-sec1;
+  }
+}
 @mixin bg_foot_color($color){
   background-color:$color;
   [data-theme="theme1"] & {

@@ -53,7 +53,7 @@ export default {
       margin-bottom:$xs;
       padding:0 $xs;
       font-size:$font-mini;
-      @include bg_color($bg-color-theme-sec);
+      @include bg_sec_color($bg-color-theme-sec);
       .iconfont{
         font-size:$font-mini;
       }
