@@ -10,11 +10,13 @@ const plugins = [
   createPersistedState({
     key: 'APP_',
     storage: window.sessionStorage
-    // reducer (val) {
-    //   return {
-    //     user: val.user // 只储存state中的user
-    //   }
-    // }
+    /*
+     * reducer (val) {
+     *   return {
+     *     user: val.user // 只储存state中的user
+     *   }
+     * }
+     */
   })
 ]
 const store = new Vuex.Store({

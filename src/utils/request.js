@@ -4,16 +4,20 @@ const service = axios.create({
   baseURL: '/',
   timeout: 3000
 })
-// ## Interceptors
-// You can intercept requests or responses before they are handled by `then` or `catch`.
+/*
+ * ## Interceptors
+ * You can intercept requests or responses before they are handled by `then` or `catch`.
+ */
 service.interceptors.request.use((config) => {
-  // Do something before request is sent
-  // config.headers['TBase-Access-Origin'] = getAccessOrigin()
-  // config.headers['TBase-Access-Token'] = getToken()
+  /*
+   * Do something before request is sent
+   * config.headers['TBase-Access-Origin'] = getAccessOrigin()
+   * config.headers['TBase-Access-Token'] = getToken()
+   */
   if (config.headers.json) {
     config.headers['Content-Type'] = 'application/json'
   } else {
-    config['transformRequest'] = [function (data) {
+    config['transformRequest'] = [function(data) {
       if (!data) return undefined
       const formData = new FormData()
       for (const key in data) {
@@ -23,12 +27,12 @@ service.interceptors.request.use((config) => {
     }]
   }
   return config
-}, function (error) {
+}, function(error) {
   // Do something with request error
   return Promise.reject(error)
 })
 service.interceptors.response.use(
-  async (response) => {
+  async(response) => {
     // console.log(response);
     const res = response.data
     const { code } = res

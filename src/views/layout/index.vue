@@ -15,7 +15,7 @@
 <script>
 import CustomNav from '@/components/CustomNav'
 export default {
-  data () {
+  data() {
     return {
       navList: [
         {
@@ -42,7 +42,7 @@ export default {
   components: {
     CustomNav
   },
-  mounted () {
+  mounted() {
     // 设置导航下划线与路由匹配
     this.findRouteIndex()
   },
@@ -50,20 +50,20 @@ export default {
     /**
      * 找到当前路由对应的导航索引
      */
-    findRouteIndex () {
-      let index = this.navList.findIndex(item => Object.is(item.path, this.$route.path))
+    findRouteIndex() {
+      const index = this.navList.findIndex(item => Object.is(item.path, this.$route.path))
       this.viewPage(index)
     },
     /**
      * 跳转我的页面
      */
-    viewMine () {
+    viewMine() {
       this.$router.push({ path: '/mine' })
     },
     /**
      * 跳转页面
      */
-    viewPage (i) {
+    viewPage(i) {
       this.translateX = i * 25 + 7
     }
   }

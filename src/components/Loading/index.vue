@@ -11,17 +11,17 @@ export default {
   props: {
     loadingMsg: {
       type: String,
-      default () {
+      default() {
         return '拼命加载中···'
       }
     }
   },
-  data () {
+  data() {
     return {
 
     }
   },
-  mounted () {
+  mounted() {
 
   },
   methods: {

@@ -27,13 +27,13 @@ export default {
       default: 4000
     }
   },
-  data () {
+  data() {
     return {
       dots: [],
       currentPageIndex: 0
     }
   },
-  mounted () {
+  mounted() {
     setTimeout(() => {
       this._setSlideWidth()
       this._initDots()
@@ -55,12 +55,12 @@ export default {
     /**
      * 設置輪播寬度
      */
-    _setSlideWidth (isResize) {
+    _setSlideWidth(isResize) {
       this.children = this.$refs.sliderGroup.children
       let width = 0
-      let sliderWidth = this.$refs.slider.clientWidth
+      const sliderWidth = this.$refs.slider.clientWidth
       for (let i = 0; i < this.children.length; i++) {
-        let child = this.children[i]
+        const child = this.children[i]
         child.style.width = sliderWidth + 'px'
         width += sliderWidth
       }
@@ -72,7 +72,7 @@ export default {
     /**
      * 初始化slider组件
      */
-    _initSlider () {
+    _initSlider() {
       this.slider = new BScroll(this.$refs.slider, {
         scrollX: true,
         scrollY: false,
@@ -84,7 +84,7 @@ export default {
         }
       })
       this.slider.on('scrollEnd', () => {
-        let pageIndex = this.slider.getCurrentPage().pageX
+        const pageIndex = this.slider.getCurrentPage().pageX
         this.currentPageIndex = pageIndex
         if (this.autoPlay) { // 继续轮播
           clearTimeout(this.timer)
@@ -100,13 +100,13 @@ export default {
     /**
      * 初始化点点
      */
-    _initDots () {
+    _initDots() {
       this.dots = new Array(this.children.length)
     },
     /**
      * 轮播
      */
-    _play () {
+    _play() {
       this.timer = setTimeout(() => {
         this.slider.next()
       }, this.interval)

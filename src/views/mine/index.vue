@@ -17,7 +17,7 @@
 import CustomNav from '@/components/CustomNav'
 import Theme from '@/components/Theme'
 export default {
-  data () {
+  data() {
     return {
       title: '我的',
       isShowThemeDialog: false
@@ -27,13 +27,13 @@ export default {
     CustomNav,
     Theme
   },
-  mounted () {
+  mounted() {
   },
   methods: {
-    showThemeDialog () {
+    showThemeDialog() {
       this.isShowThemeDialog = true
     },
-    closeThemeDialog () {
+    closeThemeDialog() {
       this.isShowThemeDialog = false
     }
   }

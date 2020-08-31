@@ -3,7 +3,7 @@ import { commonParams } from './config'
 import request from '@/utils/request'
 
 // 获取歌手列表
-export function getSingerList () {
+export function getSingerList() {
   const url = '/pc/cgi-bin/musics.fcg'
   const data = Object.assign({}, commonParams, {
     loginUin: 0,

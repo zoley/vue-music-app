@@ -15,7 +15,7 @@ import CustomNav from '@/components/CustomNav'
 import { mapState, mapActions } from 'vuex'
 export default {
   name: 'Theme',
-  data () {
+  data() {
     return {
       title: '设置主题'
     }
@@ -35,7 +35,7 @@ export default {
     /**
      * 改变主题颜色
      */
-    changeTheme (index) {
+    changeTheme(index) {
       this.themes.forEach(val => {
         val.checked = false
       })
@@ -45,7 +45,7 @@ export default {
     /**
      * 返回上一层、巴特不是路由跳转
      */
-    leftBackFn () {
+    leftBackFn() {
       this.$emit('closeThemeDialog')
     }
   }

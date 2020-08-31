@@ -1,8 +1,20 @@
 <template>
   <div class="singer-wrap">
-    <scroll :scroll-data="singerList" class="singer-content" ref="singerScroll">
+    <scroll
+      :scroll-data="singerList"
+      :listen-scroll="true"
+      :probe-type="3"
+      @scroll="listScroll"
+      class="singer-content"
+      ref="singerScroll"
+    >
       <ul>
-        <li v-for="(group,groupIndex) in singerList" :key="group.title + groupIndex" class="li-parent">
+        <li
+          v-for="(group,groupIndex) in singerList"
+          :key="group.title + groupIndex"
+          class="li-parent"
+          ref="singerGroup"
+        >
           <h2 class="h2">{{group.title}}</h2>
           <ul>
             <li v-for="(item,index) in group.items" :key="item.name+index" class="li-child" v-fb>
@@ -12,6 +24,11 @@
           </ul>
         </li>
       </ul>
+      <div class="list-shortcut" @touchstart="onShortcutTouchStart" @touchmove.stop.prevent="onShortcutTouchMove">
+        <ul>
+          <li :class="current===index?'li-item active':'li-item'" v-for="(item,index) in shortuctList" :key="index" :data-index="index">{{item}}</li>
+        </ul>
+      </div>
     </scroll>
     <div class="loading-container" v-show="singerList.length<1">
       <loading />
@@ -25,56 +42,90 @@ import { handlerFirstLetter } from '@/utils'
 import Scroll from '@/components/Scroll'
 import Loading from '@/components/Loading'
 export default {
-  data () {
+  data() {
     return {
-      singerList: []
+      // 歌手列表
+      singerList: [],
+      // 滚动距离
+      scrollY: 0,
+      // 列表高度集合
+      listHeight: []
     }
   },
-  created () {
+  created() {
+    // 定义变量
+    this.touch = {}
     // 获取歌手列表
     this._getSingerList()
   },
-  mounted () {
+  mounted() {
   },
   components: {
     Scroll,
     Loading
   },
-  computed: {},
+  computed: {
+    // 歌手字母快速索引
+    shortuctList() {
+      return this.singerList.map(group => group.title.substring(0, 1))
+    },
+    // 歌手列表dom
+    singerListRef() {
+      return this.$refs.singerScroll
+    },
+    // 歌手列表分组dom
+    singerGroupRef() {
+      return this.$refs.singerGroup
+    },
+    // 当前歌手分组索引
+    current() {
+      for (var i = 0; i < this.listHeight.length; i++) {
+        const height1 = this.listHeight[i]
+        const height2 = this.listHeight[i + 1]
+        if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+          return i
+        }
+      }
+      return 0
+    }
+  },
   methods: {
     /**
      * 请求歌手列表
      */
-    _getSingerList () {
+    _getSingerList() {
       getSingerList().then(res => {
         this.singerList = this.handleListDataFormat(res.singerList.data.singerlist)
+        this.$nextTick(() => {
+          this.calcHeight()
+        })
       })
     },
     /**
      * 处理歌手列表格式
      * @param list 数据列表
      */
-    handleListDataFormat (list) {
-      let tempList = list.map(item => {
+    handleListDataFormat(list) {
+      const tempList = list.map(item => {
         return {
           ...item,
           firstLetter: handlerFirstLetter(item.singer_name).substring(0, 1)
         }
       })
-      let map = {
+      const map = {
         hot: {
           title: '热门',
           items: []
         }
       }
-      let rest = []
+      const rest = []
       tempList.forEach((item, index) => {
         if (index < 10) {
           map.hot.items.push(this.setNewSingerObject(item.singer_id, item.singer_name, item.singer_pic))
         }
         // 按首字母分组，如果没有就创建
         if (!map.hasOwnProperty(item.firstLetter)) {
-          let json = {
+          const json = {
             title: item.firstLetter,
             items: []
           }
@@ -90,15 +141,60 @@ export default {
       rest.sort((a, b) => a.title.localeCompare(b.title))
       return [map.hot].concat(rest)
     },
-    setNewSingerObject (id, name, avatar) {
+    /**
+     * 面向对象方式创建公用对象
+     * @param id 属性id
+     * @param name 属性name
+     * @param avatar 属性avatar
+     */
+    setNewSingerObject(id, name, avatar) {
       class Singer {
-        constructor (x, y, z) {
+        constructor(x, y, z) {
           this.id = x
           this.name = y
           this.avatar = z
         }
       }
       return new Singer(id, name, avatar)
+    },
+    /**
+     * 快捷入口-开始触摸
+     * @param e 事件对象
+     */
+    onShortcutTouchStart(e) {
+      const anchorIndex = e.target.getAttribute('data-index')
+      this.touch.y1 = e.touches[0].pageY
+      this.touch.anchorIndex = anchorIndex
+      this.singerListRef.scrollToElement(this.singerGroupRef[anchorIndex], 0)
+    },
+    /**
+     * 快捷入口-移动触摸
+     * @param e 事件对象
+     */
+    onShortcutTouchMove(e) {
+      this.touch.y2 = e.touches[0].pageY
+      // 或 0 取整
+      const delta = (this.touch.y2 - this.touch.y1) / 20 | 0
+      const anchorIndex = parseInt(this.touch.anchorIndex) + delta
+      this.singerListRef.scrollToElement(this.singerGroupRef[anchorIndex], 0)
+    },
+    /**
+     * 列表滚动监听
+     * @param pos 位置
+     */
+    listScroll(pos) {
+      this.scrollY = Math.round(Math.abs(pos.y))
+    },
+    /**
+     * 计算滚动列表分组高度
+     */
+    calcHeight() {
+      let height = 0
+      this.listHeight.push(height)
+      for (let i = 0; i < this.singerGroupRef.length; i++) {
+        height += this.singerGroupRef[i].offsetHeight
+        this.listHeight.push(height)
+      }
     }
   }
 }
@@ -122,13 +218,28 @@ export default {
         align-items: center;
         padding: $xxs $sm;
         .img{
-          width:48px;
-          height:48px;
+          width:36px;
+          height:36px;
           border-radius:50%;
           margin-right:$sm;
         }
         .text{
           font-size: $font_small;
+        }
+      }
+    }
+    .list-shortcut{
+      position:fixed;
+      width: 30px;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      .li-item{
+        text-align: center;
+        height:20px;
+        line-height: 20px;
+        &.active{
+          @include font_active_color($font-color-theme-active);
         }
       }
     }

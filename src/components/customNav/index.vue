@@ -25,7 +25,7 @@ export default {
   props: {
     left: {
       type: Boolean,
-      default () {
+      default() {
         return true
       }
     },
@@ -34,31 +34,31 @@ export default {
     },
     title: {
       type: String,
-      default () {
+      default() {
         return 'Smile Music'
       }
     },
     right: {
       type: String,
-      default () {
+      default() {
         return ''
       }
     },
     rightFn: {
       type: Function,
-      default () {}
+      default() {}
     }
   },
-  data () {
+  data() {
     return {}
   },
-  mounted () {},
+  mounted() {},
   computed: {},
   methods: {
     /**
      * 返回上一级
      */
-    backFn () {
+    backFn() {
       this.leftFn ? this.leftFn() : this.$router.back(-1)
     }
   }

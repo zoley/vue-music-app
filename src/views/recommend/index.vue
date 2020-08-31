@@ -39,13 +39,13 @@ import Slider from '@/components/Slider'
 import Scroll from '@/components/Scroll'
 import Loading from '@/components/Loading'
 export default {
-  data () {
+  data() {
     return {
       recommends: [],
       discList: []
     }
   },
-  created () {
+  created() {
     // 轮播图
     this._getRecommend()
     // 歌单列表
@@ -59,13 +59,13 @@ export default {
   computed: {},
   methods: {
     // 请求轮播图片并初始化this.recommends
-    _getRecommend () {
+    _getRecommend() {
       getBanner().then(res => {
         this.recommends = res.data.slider
       })
     },
     // 请求推荐歌单并初始化this.discList
-    _getSheetList () {
+    _getSheetList() {
       getSheetList().then(res => {
         this.discList = res.playlist.data.v_playlist
       })
@@ -73,7 +73,7 @@ export default {
     /*
      * 判断图片是加载，从而刷新scroll--图片高度一致，仅需调用一次
      */
-    loadImage () {
+    loadImage() {
       if (!this.imgChecked) {
         this.imgChecked = true
         this.$refs.scroll.refresh()

@@ -10,7 +10,7 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-  data () {
+  data() {
     return {
       transitionName: 'slide-left'
     }
@@ -20,7 +20,7 @@ export default {
       dataTheme: state => state.user.dataTheme
     })
   },
-  mounted () {
+  mounted() {
     document.documentElement.setAttribute('data-theme', this.dataTheme)
   }
 }

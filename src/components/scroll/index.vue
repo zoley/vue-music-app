@@ -5,8 +5,10 @@
 </template>
 
 <script>
-// better-scroll 官方文档 http://ustbhuangyi.github.io/better-scroll/doc/options.html
-// https://better-scroll.github.io/docs/zh-CN/guide/#betterscroll-是什么
+/*
+ * better-scroll 官方文档 http://ustbhuangyi.github.io/better-scroll/doc/options.html
+ * https://better-scroll.github.io/docs/zh-CN/guide/#betterscroll-是什么
+ */
 import BScroll from 'better-scroll'
 export default {
   name: 'Scroll',
@@ -18,7 +20,7 @@ export default {
      */
     probeType: {
       type: Number,
-      default () {
+      default() {
         return 2
       }
     },
@@ -28,45 +30,45 @@ export default {
      */
     click: {
       type: Boolean,
-      default () {
+      default() {
         return true
       }
     },
     // 是否监听滚动事件
     listenScroll: {
       type: Boolean,
-      default () {
+      default() {
         return false
       }
     },
     // 是否派发滚动到底部的事件--用于上拉加载
     pullUp: {
       type: Boolean,
-      default () {
+      default() {
         return false
       }
     },
     // 是否派发滚动之前的事件
     beforeScroll: {
       type: Boolean,
-      default () {
+      default() {
         return false
       }
     },
     // 传入的列表数据
     scrollData: {
       type: Array,
-      default () {
+      default() {
         return []
       }
     }
   },
-  data () {
+  data() {
     return {
 
     }
   },
-  mounted () {
+  mounted() {
     // 初始化滚动
     setTimeout(() => {
       this._initScroll()
@@ -74,7 +76,7 @@ export default {
   },
   watch: {
     // 监听数据变化刷新组件
-    scrollData (val) {
+    scrollData(val) {
       setTimeout(() => {
         this.refresh()
       }, 200)
@@ -84,8 +86,8 @@ export default {
     /**
      * 初始化滚动组件
      */
-    _initScroll () {
-      let that = this
+    _initScroll() {
+      const that = this
       that.scroll = new BScroll(that.$refs.scrollWrapper, {
         probeType: that.probeType,
         click: that.click
@@ -98,9 +100,11 @@ export default {
       if (that.pullUp) {
         that.scroll.on('scrollEnd', (pos) => {
           that.$emit('scrollToEnd', pos)
-          // if (this.scroll.y <= (this.scroll.maxScrollY + 50)) {
-          //   this.$emit('scrollToEnd')
-          // }
+          /*
+           * if (this.scroll.y <= (this.scroll.maxScrollY + 50)) {
+           *   this.$emit('scrollToEnd')
+           * }
+           */
         })
       }
       if (that.beforeScroll) {
@@ -112,31 +116,31 @@ export default {
     /**
      * 禁用滚动
      */
-    disable () {
+    disable() {
       this.scroll && this.scroll.disable()
     },
     /**
      * 启用滚动
      */
-    enable () {
+    enable() {
       this.scroll && this.scroll.enable()
     },
     /**
      * 刷新滚动
      */
-    refresh () {
+    refresh() {
       this.scroll && this.scroll.refresh()
     },
     /**
      *滚动到固定位置
      */
-    scrollTo () {
+    scrollTo() {
       this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
     },
     /**
-       * 滚动到固定 dom
-       */
-    scrollToElement () {
+     * 滚动到固定 dom
+     */
+    scrollToElement() {
       this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
     }
 

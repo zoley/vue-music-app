@@ -34,18 +34,20 @@ const user = {
   },
   actions: {
     // 用户名登录
-    LogOut ({ commit, state }) {
+    LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        // logout(state.token).then(() => {
-        //   commit('SET_TOKEN', undefined)
-        //   resolve()
-        // }).catch(error => {
-        //   reject(error)
-        // })
+        /*
+         * logout(state.token).then(() => {
+         *   commit('SET_TOKEN', undefined)
+         *   resolve()
+         * }).catch(error => {
+         *   reject(error)
+         * })
+         */
       })
     },
     // 改变主题颜色
-    [CHANGE_THEME_ACT] ({ commit, state }, data) {
+    [CHANGE_THEME_ACT]({ commit, state }, data) {
       return new Promise((resolve, reject) => {
         commit('CHANGE_THEME_MUT', data)
         resolve()

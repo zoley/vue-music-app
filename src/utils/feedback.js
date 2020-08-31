@@ -1,22 +1,22 @@
 
-(function (global, factory, define) {
+(function(global, factory, define) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory()
     : typeof define === 'function' && define.amd ? define(factory)
       : (global.install = factory())
-}(this, function () {
+}(this, function() {
   'use strict'
 
   var locked = false; var timer = null
-  var vueTouchFeedback = function (Vue) {
+  var vueTouchFeedback = function(Vue) {
     var touchFeedback = {
-      bind: function (el, binding) {
+      bind: function(el, binding) {
         var value = binding.value
         on(el, 'touchstart', handleStart.bind(null, el, value))
         on(el, 'touchmove', handleEnd.bind(null, el, value))
         on(el, 'touchend', handleEnd.bind(null, el, value))
         on(el, 'touchcancel', handleEnd.bind(null, el, value))
       },
-      unbind: function (el, binding) {
+      unbind: function(el, binding) {
         var value = binding.value
         off(el, 'touchstart', handleStart.bind(null, el, value))
         off(el, 'touchmove', handleEnd.bind(null, el, value))
@@ -29,16 +29,16 @@
 
   return vueTouchFeedback
 
-  function on (el, eventName, fn) {
+  function on(el, eventName, fn) {
     el.addEventListener(eventName, fn, false)
   }
-  function off (el, eventName, fn) {
+  function off(el, eventName, fn) {
     el.removeEventListener(eventName, fn, false)
   }
 
-  function handleStart (el, cls) {
+  function handleStart(el, cls) {
     clearTimeout(timer)
-    timer = setTimeout(function () {
+    timer = setTimeout(function() {
       locked = true
       if (cls) return addClass(el, cls.cls)
       setStyle(el, {
@@ -48,7 +48,7 @@
     , 20)
   }
 
-  function handleEnd (el, cls) {
+  function handleEnd(el, cls) {
     clearTimeout(timer)
     if (!locked) return
     locked = false
@@ -58,14 +58,14 @@
     })
   }
 
-  function setStyle (el, data) {
+  function setStyle(el, data) {
     if (!data || !el) return
     for (var i in data) {
       el.style[i] = data[i]
     }
   }
 
-  function hasClass (el, cls) {
+  function hasClass(el, cls) {
     if (!el || !cls) return false
     if (cls.indexOf(' ') !== -1) throw new Error('className should not contain space.')
     if (el.classList) {
@@ -76,7 +76,7 @@
   }
 
   /* istanbul ignore next */
-  function addClass (el, cls) {
+  function addClass(el, cls) {
     if (!el) return
     var curClass = el.className
     var classes = (cls || '').split(' ')
@@ -99,7 +99,7 @@
   }
 
   /* istanbul ignore next */
-  function removeClass (el, cls) {
+  function removeClass(el, cls) {
     if (!el || !cls) return
     var classes = cls.split(' ')
     var curClass = ' ' + el.className + ' '
