@@ -5,11 +5,11 @@
       <span class="cell-name">主题颜色</span>
       <span class="iconfont i-right"></span>
     </div>
-   <transition name="shift">
-     <div class="theme-wrap" v-if="isShowThemeDialog">
-        <theme @closeThemeDialog="closeThemeDialog"/>
-     </div>
-   </transition>
+    <transition name="shift">
+      <div class="theme-wrap" v-if="isShowThemeDialog">
+          <theme @closeThemeDialog="closeThemeDialog"/>
+      </div>
+    </transition>
   </div>
 </template>
 

@@ -29,6 +29,7 @@
           <li :class="current===index?'li-item active':'li-item'" v-for="(item,index) in shortuctList" :key="index" :data-index="index">{{item}}</li>
         </ul>
       </div>
+      <div class="word-title" :style="fixedTitleStyle" v-show="fixedTitle">{{fixedTitle}}</div>
     </scroll>
     <div class="loading-container" v-show="singerList.length<1">
       <loading />
@@ -49,7 +50,9 @@ export default {
       // 滚动距离
       scrollY: 0,
       // 列表高度集合
-      listHeight: []
+      listHeight: [],
+      // 滚动距离顶部标题距离
+      diff: 0
     }
   },
   created() {
@@ -79,17 +82,46 @@ export default {
     },
     // 当前歌手分组索引
     current() {
+      // 滚动到顶部
+      if (this.scrollY > 0) {
+        return 0
+      }
+      // 滚动中间
       for (var i = 0; i < this.listHeight.length; i++) {
         const height1 = this.listHeight[i]
         const height2 = this.listHeight[i + 1]
-        if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+        if (!height2 || (Math.abs(this.scrollY) >= height1 && Math.abs(this.scrollY) < height2)) {
+          this.setDiffValue(height2)
           return i
         }
       }
-      return 0
+      // 滚动底部
+      return this.listHeight.length - 2
+    },
+    // 固定的顶部标题
+    fixedTitle() {
+      if (this.scrollY > 0) {
+        return ''
+      }
+      return this.singerList[this.current] ? this.singerList[this.current].title : ''
+    },
+    // 滚动组到顶部标题距离样式
+    fixedTitleStyle() {
+      if (this.diff < 32) {
+        return `transform:translate3d(0,-${32 - this.diff}px,0)`
+      } else {
+        return ''
+      }
     }
   },
   methods: {
+    /**
+     * computed里面不能直接对data赋值，写在方法里
+     * @param height 高度
+     */
+    setDiffValue(height) {
+      this.diff = height + this.scrollY
+    },
     /**
      * 请求歌手列表
      */
@@ -183,7 +215,7 @@ export default {
      * @param pos 位置
      */
     listScroll(pos) {
-      this.scrollY = Math.round(Math.abs(pos.y))
+      this.scrollY = pos.y
     },
     /**
      * 计算滚动列表分组高度
@@ -205,6 +237,7 @@ export default {
   .singer-content {
     height: calc(100vh - 84px);
     overflow: hidden;
+    position: relative;
     .li-parent{
       .h2{
         padding: $xs $sm;
@@ -243,6 +276,16 @@ export default {
         }
       }
     }
+  }
+  .word-title{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    padding: $xs $sm;
+    font-size: $font_mini;
+    @include bg_sec_color($bg-color-theme-sec);
+    @include font_sec_color($font-color-theme-sec);
   }
   .loading-container {
     position: fixed;

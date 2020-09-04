@@ -15,6 +15,7 @@
 <script>
 import CustomNav from '@/components/CustomNav'
 export default {
+  name: 'Layout',
   data() {
     return {
       navList: [

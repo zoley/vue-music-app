@@ -18,6 +18,11 @@ Vue.use(VueLazyload, {
   attempt: 2
 })
 
+// 监听浏览器的返回操作，赋值
+window.addEventListener('popstate', (e) => {
+  router.isBack = true
+}, false)
+
 Vue.config.productionTip = false
 
 new Vue({
