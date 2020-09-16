@@ -1,5 +1,5 @@
 <template>
-   <div ref="scrollWrapper" class="recommend-content-x">
+   <div ref="scrollWrapper">
      <slot/>
    </div>
 </template>

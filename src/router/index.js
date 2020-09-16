@@ -44,6 +44,11 @@ const routes = [
     name: 'mine',
     component: () => import('../views/mine/index')
   },
+  {
+    path: '/singer/detail/:mid',
+    name: 'singerDetail',
+    component: () => import('../views/singer/detail/index')
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 

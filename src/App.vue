@@ -43,6 +43,7 @@ export default {
     @include bg_color($bg-color-theme);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
     .router {
       transition: all .377s ease;
       will-change: transform;

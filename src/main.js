@@ -7,9 +7,10 @@ import store from './store'
 import './assets/font/iconfont.css' // 字体图标
 import './assets/css/reset.css' // 格式化样式
 import './assets/css/base.scss' // 全局样式
+import '@/utils/component' // 引入全局注册的自定义组件
 
 import vueFeedback from './utils/feedback' // 触摸反馈 <button v-fb>按钮</button>  /  <button v-fb="{cls:'buttonActive'}"
-import VueLazyload from 'vue-lazyload'
+import VueLazyload from 'vue-lazyload' // 图片懒加载
 Vue.use(vueFeedback)
 Vue.use(VueLazyload, {
   preLoad: 1.3,

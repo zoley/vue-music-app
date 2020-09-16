@@ -1,5 +1,5 @@
 <template>
-  <div class="mine">
+  <div class="frame-wrap mine">
     <custom-nav :title="title"/>
     <div class="cell z-flex" @click="showThemeDialog">
       <span class="cell-name">主题颜色</span>
@@ -14,18 +14,12 @@
 </template>
 
 <script>
-import CustomNav from '@/components/CustomNav'
-import Theme from '@/components/Theme'
 export default {
   data() {
     return {
       title: '我的',
       isShowThemeDialog: false
     }
-  },
-  components: {
-    CustomNav,
-    Theme
   },
   mounted() {
   },
@@ -42,11 +36,6 @@ export default {
 
 <style scoped lang="scss">
   .mine{
-    max-width: 1024px;
-    min-height: 100vh;
-    margin: 0 auto;
-    @include bg_color($bg-color-theme);
-    @include font_color($font-color-theme);
     .cell{
       height:40px;
       justify-content: space-between;

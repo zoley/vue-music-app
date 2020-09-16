@@ -1,5 +1,5 @@
 <template>
-  <div class="custom-nav-box">
+  <div class="custom-nav-box" :class="{'immerse':barType===2}">
     <div class="custom-nav z-flex">
       <div class="left-wrap">
         <div class="left z-flex" v-if="left" @click="backFn" v-fb>
@@ -23,36 +23,49 @@
 export default {
   name: 'CustomNav',
   props: {
+    // 显示左边箭头
     left: {
       type: Boolean,
       default() {
         return true
       }
     },
+    // 点击左边箭头方法
     leftFn: {
       type: Function
     },
+    // 标题
     title: {
       type: String,
       default() {
         return 'Smile Music'
       }
     },
+    // 显示右边按钮
     right: {
       type: String,
       default() {
         return ''
       }
     },
+    // 右边按钮方法
     rightFn: {
       type: Function,
       default() {}
+    },
+    // 导航栏类型- 1-默认式（relative）,2-浸入式（fixed）
+    barType: {
+      type: Number,
+      default() {
+        return 1
+      }
     }
   },
   data() {
     return {}
   },
-  mounted() {},
+  mounted() {
+  },
   computed: {},
   methods: {
     /**
@@ -102,6 +115,15 @@ export default {
         height: 100%;
         justify-content: center;
       }
+    }
+  }
+  &.immerse{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    .custom-nav{
+      border:none;
     }
   }
 }

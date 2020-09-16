@@ -1,5 +1,5 @@
 <template>
-  <div class="layout">
+  <div class="frame-wrap layout">
     <custom-nav :right="rightCustom" :rightFn="viewMine" :left="false"/>
     <div class="nav z-flex">
       <router-link v-for="(item,index) in navList" :key="index" class="nav-item" :to="item.path" @click.native="viewPage(index)">{{item.text}}</router-link>
@@ -13,7 +13,6 @@
   </div>
 </template>
 <script>
-import CustomNav from '@/components/CustomNav'
 export default {
   name: 'Layout',
   data() {
@@ -39,9 +38,6 @@ export default {
       rightCustom: '<span class="iconfont i-user" style="font-size:24px;"></span>',
       translateX: 7
     }
-  },
-  components: {
-    CustomNav
   },
   mounted() {
     // 设置导航下划线与路由匹配
@@ -72,11 +68,6 @@ export default {
 </script>
 <style scoped lang="scss">
 .layout {
-  max-width: 1024px;
-  min-height: 100vh;
-  margin: 0 auto;
-  @include bg_color($bg-color-theme);
-  @include font_color($font-color-theme);
   .nav {
     width: 100%;
     height: 40px;

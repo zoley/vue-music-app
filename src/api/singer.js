@@ -1,5 +1,5 @@
-import { commonParams } from './config'
-// import jsonp from '@/utils/jsonp'
+import { commonParams, options } from './config'
+import jsonp from '@/utils/jsonp'
 import request from '@/utils/request'
 
 // 获取歌手列表
@@ -8,7 +8,7 @@ export function getSingerList() {
   const data = Object.assign({}, commonParams, {
     loginUin: 0,
     hostUin: 0,
-    sign: 'zzaywxm8m1zex1xosb2f3fef04bda3a286eeb40136f6b80f4a',
+    sign: 'zzanvnp6fpi88gg4yo2f3fef04bda3a286eeb40136f6b80f4a',
     platform: 'yqq.json',
     needNewCode: 0,
     format: 'json',
@@ -33,4 +33,19 @@ export function getSingerList() {
     url: url,
     params: data
   })
+}
+// 获取歌手详情
+export function getSingerDetailById(mid) {
+  const url = '/api/v8/fcg-bin/fcg_v8_singer_track_cp.fcg'
+  const data = Object.assign({}, commonParams, {
+    hostUin: 0,
+    platform: 'yqq',
+    needNewCode: 0,
+    order: 'listen',
+    begin: 0,
+    num: 80,
+    songstatus: 1,
+    singermid: mid
+  })
+  return jsonp(url, data, options)
 }

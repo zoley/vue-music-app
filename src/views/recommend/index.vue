@@ -14,7 +14,7 @@
         <div class="recommend-list">
           <h3 class="h3">KTV热歌推荐</h3>
           <ul class="ul">
-            <li class="li z-flex" v-for="(item,index) in discList" :key="index" v-fb>
+            <li class="li z-flex" v-for="(item,index) in discList" :key="index" v-fb="{cls:'tap-active'}">
               <div class="media-img">
                 <img v-lazy="item.cover_url_small" />
               </div>
@@ -35,9 +35,6 @@
 
 <script>
 import { getBanner, getSheetList } from '@/api/recommend'
-import Slider from '@/components/Slider'
-import Scroll from '@/components/Scroll'
-import Loading from '@/components/Loading'
 export default {
   data() {
     return {
@@ -50,11 +47,6 @@ export default {
     this._getRecommend()
     // 歌单列表
     this._getSheetList()
-  },
-  components: {
-    Slider,
-    Scroll,
-    Loading
   },
   computed: {},
   methods: {

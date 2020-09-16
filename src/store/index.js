@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 
 import user from './modules/user'
+import singer from './modules/singer'
 
 Vue.use(Vuex)
 
@@ -21,7 +22,8 @@ const plugins = [
 ]
 const store = new Vuex.Store({
   modules: {
-    user
+    user,
+    singer
   },
   plugins
 })

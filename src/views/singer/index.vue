@@ -17,7 +17,13 @@
         >
           <h2 class="h2">{{group.title}}</h2>
           <ul>
-            <li v-for="(item,index) in group.items" :key="item.name+index" class="li-child" v-fb>
+            <li
+            v-for="(item,index) in group.items"
+            :key="item.name+index"
+            class="li-child"
+            v-fb="{cls:'tap-active'}"
+            @click="viewDetail(item)"
+          >
               <img class="img" v-lazy="item.avatar">
               <span class="text">{{item.name}}</span>
             </li>
@@ -40,8 +46,7 @@
 <script>
 import { getSingerList } from '@/api/singer'
 import { handlerFirstLetter } from '@/utils'
-import Scroll from '@/components/Scroll'
-import Loading from '@/components/Loading'
+import { mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -62,10 +67,6 @@ export default {
     this._getSingerList()
   },
   mounted() {
-  },
-  components: {
-    Scroll,
-    Loading
   },
   computed: {
     // 歌手字母快速索引
@@ -115,6 +116,9 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      setCurrentSinger: 'singer/SET_CURRENT_SINGER'
+    }),
     /**
      * computed里面不能直接对data赋值，写在方法里
      * @param height 高度
@@ -153,7 +157,7 @@ export default {
       const rest = []
       tempList.forEach((item, index) => {
         if (index < 10) {
-          map.hot.items.push(this.setNewSingerObject(item.singer_id, item.singer_name, item.singer_pic))
+          map.hot.items.push(this.setNewSingerObject(item.singer_id, item.singer_mid, item.singer_name))
         }
         // 按首字母分组，如果没有就创建
         if (!map.hasOwnProperty(item.firstLetter)) {
@@ -163,7 +167,7 @@ export default {
           }
           map[item.firstLetter] = json
         }
-        map[item.firstLetter].items.push(this.setNewSingerObject(item.singer_id, item.singer_name, item.singer_pic))
+        map[item.firstLetter].items.push(this.setNewSingerObject(item.singer_id, item.singer_mid, item.singer_name))
       })
       Object.entries(map).forEach(([key, val]) => {
         if (key !== 'hot') {
@@ -179,15 +183,16 @@ export default {
      * @param name 属性name
      * @param avatar 属性avatar
      */
-    setNewSingerObject(id, name, avatar) {
+    setNewSingerObject(id, mid, name, avatar) {
       class Singer {
-        constructor(x, y, z) {
-          this.id = x
+        constructor(w, x, y, z) {
+          this.id = w
+          this.mid = x
           this.name = y
-          this.avatar = z
+          this.avatar = `http://y.gtimg.cn/music/photo_new/T001R300x300M000${x}.webp`
         }
       }
-      return new Singer(id, name, avatar)
+      return new Singer(id, mid, name, avatar)
     },
     /**
      * 快捷入口-开始触摸
@@ -227,6 +232,14 @@ export default {
         height += this.singerGroupRef[i].offsetHeight
         this.listHeight.push(height)
       }
+    },
+    /**
+     * 跳转详情
+     * @param item 数据对象
+     */
+    viewDetail(item) {
+      this.setCurrentSinger(item)
+      this.$router.push({ path: '/singer/detail/' + item.mid })
     }
   }
 }
