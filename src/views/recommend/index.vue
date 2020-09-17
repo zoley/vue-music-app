@@ -1,33 +1,35 @@
 <template>
   <div class="recommend-wrap">
-    <scroll :scroll-data="discList" class="recommend-content" ref="scroll">
+    <scroll ref="scroll" :scroll-data="discList" class="recommend-content">
       <div>
-        <div class="slider-box" v-if="recommends.length">
+        <div v-if="recommends.length" class="slider-box">
           <slider>
             <div v-for="(item,index) in recommends" :key="index" class="slider-item">
               <a :href="item.linkUrl">
-                <img @load="loadImage" :src="item.picUrl" alt />
+                <img :src="item.picUrl" alt @load="loadImage">
               </a>
             </div>
           </slider>
         </div>
         <div class="recommend-list">
-          <h3 class="h3">KTV热歌推荐</h3>
+          <h3 class="h3">
+            KTV热歌推荐
+          </h3>
           <ul class="ul">
-            <li class="li z-flex" v-for="(item,index) in discList" :key="index" v-fb="{cls:'tap-active'}">
+            <li v-for="(item,index) in discList" :key="index" v-fb="{cls:'tap-active'}" class="li z-flex">
               <div class="media-img">
-                <img v-lazy="item.cover_url_small" />
+                <img v-lazy="item.cover_url_small">
               </div>
               <div class="media-content">
-                <h3>{{item.creator_info.nick}}</h3>
-                <p>{{item.title}}</p>
+                <h3>{{ item.creator_info.nick }}</h3>
+                <p>{{ item.title }}</p>
               </div>
             </li>
           </ul>
         </div>
       </div>
     </scroll>
-    <div class="loading-container" v-show="discList.length<1">
+    <div v-show="discList.length<1" class="loading-container">
       <loading />
     </div>
   </div>
@@ -42,13 +44,13 @@ export default {
       discList: []
     }
   },
+  computed: {},
   created() {
     // 轮播图
     this._getRecommend()
     // 歌单列表
     this._getSheetList()
   },
-  computed: {},
   methods: {
     // 请求轮播图片并初始化this.recommends
     _getRecommend() {

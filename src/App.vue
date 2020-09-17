@@ -2,7 +2,7 @@
   <div id="app">
     <transition :name="transitionName">
       <keep-alive include="Layout">
-        <router-view class="router" ></router-view>
+        <router-view class="router" />
       </keep-alive>
     </transition>
   </div>
@@ -46,9 +46,9 @@ export default {
     overflow: hidden;
     .router {
       transition: all .377s ease;
-      will-change: transform;
-      backface-visibility: hidden;
-      perspective: 1000;
+      // will-change: transform;
+      // backface-visibility: hidden;
+      // perspective: 1000;
     }
     .slide-left-enter,
     .slide-right-leave-active {

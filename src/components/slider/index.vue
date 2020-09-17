@@ -1,10 +1,10 @@
 <template>
-  <div class="slider" ref="slider">
-    <div class="slider-group" ref="sliderGroup">
-      <slot></slot>
+  <div ref="slider" class="slider">
+    <div ref="sliderGroup" class="slider-group">
+      <slot />
     </div>
     <div class="dots">
-      <span class="dot" :class="{active:currentPageIndex===index}" v-for="(item,index) in dots" :key="index"></span>
+      <span v-for="(item,index) in dots" :key="index" class="dot" :class="{active:currentPageIndex===index}" />
     </div>
   </div>
 </template>
@@ -33,6 +33,7 @@ export default {
       currentPageIndex: 0
     }
   },
+  computed: {},
   mounted() {
     setTimeout(() => {
       this._setSlideWidth()
@@ -50,7 +51,6 @@ export default {
       this.slider.refresh() // 刷新轮播
     })
   },
-  computed: {},
   methods: {
     /**
      * 設置輪播寬度

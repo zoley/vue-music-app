@@ -1,7 +1,7 @@
 <template>
-   <div ref="scrollWrapper">
-     <slot/>
-   </div>
+  <div ref="scrollWrapper">
+    <slot />
+  </div>
 </template>
 
 <script>
@@ -68,12 +68,6 @@ export default {
 
     }
   },
-  mounted() {
-    // 初始化滚动
-    setTimeout(() => {
-      this._initScroll()
-    }, 20)
-  },
   watch: {
     // 监听数据变化刷新组件
     scrollData(val) {
@@ -81,6 +75,12 @@ export default {
         this.refresh()
       }, 200)
     }
+  },
+  mounted() {
+    // 初始化滚动
+    setTimeout(() => {
+      this._initScroll()
+    }, 20)
   },
   methods: {
     /**

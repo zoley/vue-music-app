@@ -8,13 +8,22 @@
         <img class="pic-404__child right" src="@/assets//404_images/404_cloud.png" alt="404">
       </div>
       <div class="bullshit">
-        <div class="bullshit__oops min-none">OOPS!</div>
-        <div class="bullshit__info min-none">版权所有
+        <div class="bullshit__oops min-none">
+          OOPS!
+        </div>
+        <div class="bullshit__info min-none">
+          版权所有
           <a class="link-type min-none" href="http://zoley.me/blog.php" target="_blank">zole小站</a>
         </div>
-        <div class="bullshit__headline min-none">{{ message }}</div>
-        <div class="bullshit__info min-none">请检查您输入的网址是否正确，请点击以下按钮返回主页或者发送错误报告</div>
-        <router-link to="/" class="bullshit__return-home">返回首页</router-link>
+        <div class="bullshit__headline min-none">
+          {{ message }}
+        </div>
+        <div class="bullshit__info min-none">
+          请检查您输入的网址是否正确，请点击以下按钮返回主页或者发送错误报告
+        </div>
+        <router-link to="/" class="bullshit__return-home">
+          返回首页
+        </router-link>
       </div>
     </div>
   </div>

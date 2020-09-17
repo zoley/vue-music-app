@@ -1,13 +1,15 @@
 <template>
   <div class="frame-wrap layout">
-    <custom-nav :right="rightCustom" :rightFn="viewMine" :left="false"/>
+    <custom-nav :right="rightCustom" :right-fn="viewMine" :left="false" />
     <div class="nav z-flex">
-      <router-link v-for="(item,index) in navList" :key="index" class="nav-item" :to="item.path" @click.native="viewPage(index)">{{item.text}}</router-link>
-      <b class="slide-line" :style="'transform:translate3d('+(translateX / 0.11)+'%,0,0)'"></b>
+      <router-link v-for="(item,index) in navList" :key="index" class="nav-item" :to="item.path" @click.native="viewPage(index)">
+        {{ item.text }}
+      </router-link>
+      <b class="slide-line" :style="'transform:translate3d('+(translateX / 0.11)+'%,0,0)'" />
     </div>
     <div class="content">
       <keep-alive>
-        <router-view></router-view>
+        <router-view />
       </keep-alive>
     </div>
   </div>

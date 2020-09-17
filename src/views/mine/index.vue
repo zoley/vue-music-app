@@ -1,13 +1,13 @@
 <template>
   <div class="frame-wrap mine">
-    <custom-nav :title="title"/>
+    <custom-nav :title="title" />
     <div class="cell z-flex" @click="showThemeDialog">
       <span class="cell-name">主题颜色</span>
-      <span class="iconfont i-right"></span>
+      <span class="iconfont i-right" />
     </div>
     <transition name="shift">
-      <div class="theme-wrap" v-if="isShowThemeDialog">
-          <theme @closeThemeDialog="closeThemeDialog"/>
+      <div v-if="isShowThemeDialog" class="theme-wrap">
+        <theme @closeThemeDialog="closeThemeDialog" />
       </div>
     </transition>
   </div>

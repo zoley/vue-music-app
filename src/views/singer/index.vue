@@ -1,43 +1,49 @@
 <template>
   <div class="singer-wrap">
     <scroll
+      ref="singerScroll"
       :scroll-data="singerList"
       :listen-scroll="true"
       :probe-type="3"
-      @scroll="listScroll"
       class="singer-content"
-      ref="singerScroll"
+      @scroll="listScroll"
     >
       <ul>
         <li
           v-for="(group,groupIndex) in singerList"
           :key="group.title + groupIndex"
-          class="li-parent"
           ref="singerGroup"
+          class="li-parent"
         >
-          <h2 class="h2">{{group.title}}</h2>
+          <h2 class="h2">
+            {{ group.title }}
+          </h2>
           <ul>
             <li
-            v-for="(item,index) in group.items"
-            :key="item.name+index"
-            class="li-child"
-            v-fb="{cls:'tap-active'}"
-            @click="viewDetail(item)"
-          >
-              <img class="img" v-lazy="item.avatar">
-              <span class="text">{{item.name}}</span>
+              v-for="(item,index) in group.items"
+              :key="item.name+index"
+              v-fb="{cls:'tap-active'}"
+              class="li-child"
+              @click="viewDetail(item)"
+            >
+              <img v-lazy="item.avatar" class="img">
+              <span class="text">{{ item.name }}</span>
             </li>
           </ul>
         </li>
       </ul>
       <div class="list-shortcut" @touchstart="onShortcutTouchStart" @touchmove.stop.prevent="onShortcutTouchMove">
         <ul>
-          <li :class="current===index?'li-item active':'li-item'" v-for="(item,index) in shortuctList" :key="index" :data-index="index">{{item}}</li>
+          <li v-for="(item,index) in shortuctList" :key="index" :class="current===index?'li-item active':'li-item'" :data-index="index">
+            {{ item }}
+          </li>
         </ul>
       </div>
-      <div class="word-title" :style="fixedTitleStyle" v-show="fixedTitle">{{fixedTitle}}</div>
+      <div v-show="fixedTitle" class="word-title" :style="fixedTitleStyle">
+        {{ fixedTitle }}
+      </div>
     </scroll>
-    <div class="loading-container" v-show="singerList.length<1">
+    <div v-show="singerList.length<1" class="loading-container">
       <loading />
     </div>
   </div>
@@ -59,14 +65,6 @@ export default {
       // 滚动距离顶部标题距离
       diff: 0
     }
-  },
-  created() {
-    // 定义变量
-    this.touch = {}
-    // 获取歌手列表
-    this._getSingerList()
-  },
-  mounted() {
   },
   computed: {
     // 歌手字母快速索引
@@ -114,6 +112,14 @@ export default {
         return ''
       }
     }
+  },
+  created() {
+    // 定义变量
+    this.touch = {}
+    // 获取歌手列表
+    this._getSingerList()
+  },
+  mounted() {
   },
   methods: {
     ...mapMutations({

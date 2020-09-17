@@ -1,9 +1,18 @@
 <template>
   <div class="song-list-wrap">
     <ul>
-      <li class="li" v-for="(item,index) in listData" :key="index">
-        <h2 class="name">{{item.Fupload_time}}</h2>
-        <p class="desc"></p>
+      <li
+        v-for="(item,index) in listData"
+        :key="index"
+        v-fb="{cls:'tap-active'}"
+        class="li"
+      >
+        <h3 class="name">
+          {{ item.name }}
+        </h3>
+        <p class="desc">
+          {{ item.singer }} - {{ item.album }}
+        </p>
       </li>
     </ul>
   </div>
@@ -12,6 +21,8 @@
 <script>
 export default {
   name: 'SongList',
+  components: {
+  },
   props: {
     listData: {
       type: Array,
@@ -24,13 +35,11 @@ export default {
     return {
     }
   },
+  computed: {},
   created() {
   },
   mounted() {
   },
-  components: {
-  },
-  computed: {},
   methods: {
 
   }
@@ -38,4 +47,16 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+  .song-list-wrap{
+    .li{
+      padding:$xs $sm;
+      .name{
+        margin-bottom: $xs;
+        @include font_sec_color($font-color-theme-sec);
+      }
+      .desc{
+        line-height: 20px;
+      }
+    }
+  }
 </style>

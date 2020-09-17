@@ -1,8 +1,8 @@
 <template>
-   <div class="loading-wrap">
-     <span class="iconfont i-xingzhuang"></span>
-     <p>{{loadingMsg}}</p>
-   </div>
+  <div class="loading-wrap">
+    <span class="iconfont i-xingzhuang" />
+    <p>{{ loadingMsg }}</p>
+  </div>
 </template>
 
 <script>

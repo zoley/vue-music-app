@@ -1,10 +1,10 @@
 <template>
   <div class="theme">
-    <custom-nav :title="title" :leftFn="leftBackFn"/>
+    <custom-nav :title="title" :left-fn="leftBackFn" />
     <ul>
-      <li class="cell-li z-flex" v-for="(v,k) in themes" :key="k" @click="changeTheme(k)">
-        <span class="text">{{v.name}} <b :style="'background:'+v.color"></b></span>
-        <span v-if="v.checked" class="iconfont i-duihao"></span>
+      <li v-for="(v,k) in themes" :key="k" class="cell-li z-flex" @click="changeTheme(k)">
+        <span class="text">{{ v.name }} <b :style="'background:'+v.color" /></span>
+        <span v-if="v.checked" class="iconfont i-duihao" />
       </li>
     </ul>
   </div>
@@ -15,6 +15,9 @@ import CustomNav from '@/components/CustomNav'
 import { mapState, mapActions } from 'vuex'
 export default {
   name: 'Theme',
+  components: {
+    CustomNav
+  },
   data() {
     return {
       title: '设置主题'
@@ -24,9 +27,6 @@ export default {
     ...mapState({
       themes: state => state.user.themes
     })
-  },
-  components: {
-    CustomNav
   },
   methods: {
     ...mapActions('user', [

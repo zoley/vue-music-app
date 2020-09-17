@@ -2,18 +2,18 @@
   <div class="custom-nav-box" :class="{'immerse':barType===2}">
     <div class="custom-nav z-flex">
       <div class="left-wrap">
-        <div class="left z-flex" v-if="left" @click="backFn" v-fb>
-          <span class="iconfont i-left"></span>
+        <div v-if="left" v-fb class="left z-flex" @click="backFn">
+          <span class="iconfont i-left" />
         </div>
       </div>
       <div class="center-wrap z-flex">
-        <div class="portrait-wrap" v-if="title==='Smile Music'">
-          <span class="iconfont i-mouse"></span>
+        <div v-if="title==='Smile Music'" class="portrait-wrap">
+          <span class="iconfont i-mouse" />
         </div>
-        <span class="title">{{title}}</span>
+        <span class="title">{{ title }}</span>
       </div>
       <div class="right-wrap">
-        <div class="right z-flex" v-if="right" v-html="right" @click="rightFn" v-fb></div>
+        <div v-if="right" v-fb class="right z-flex" @click="rightFn" v-html="right" />
       </div>
     </div>
   </div>
@@ -32,7 +32,8 @@ export default {
     },
     // 点击左边箭头方法
     leftFn: {
-      type: Function
+      type: Function,
+      default: null
     },
     // 标题
     title: {
@@ -51,7 +52,7 @@ export default {
     // 右边按钮方法
     rightFn: {
       type: Function,
-      default() {}
+      default: null
     },
     // 导航栏类型- 1-默认式（relative）,2-浸入式（fixed）
     barType: {
@@ -64,9 +65,9 @@ export default {
   data() {
     return {}
   },
+  computed: {},
   mounted() {
   },
-  computed: {},
   methods: {
     /**
      * 返回上一级
@@ -122,6 +123,10 @@ export default {
     top:0;
     left:0;
     width:100%;
+    max-width: 1024px;
+    right:0;
+    margin:0 auto;
+    z-index:10;
     .custom-nav{
       border:none;
     }

@@ -3,10 +3,7 @@ module.exports = {
   env: {
     node: true
   },
-  'extends': [
-    'plugin:vue/essential',
-    '@vue/standard'
-  ],
+  'extends': ['plugin:vue/recommended', 'eslint:recommended'],
   // add your custom rules here
   // it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
@@ -20,6 +17,7 @@ module.exports = {
         'allowFirstLine': false
       }
     }],
+    'vue/no-v-html':0,
     'vue/name-property-casing': ['error', 'PascalCase'],
     'accessor-pairs': 2,
     'arrow-spacing': [2, {
@@ -68,7 +66,6 @@ module.exports = {
     'new-parens': 2,
     'no-array-constructor': 2,
     'no-caller': 2,
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-class-assign': 2,
     'no-cond-assign': 2,
     'no-const-assign': 2,
@@ -186,7 +183,6 @@ module.exports = {
     'yield-star-spacing': [2, 'both'],
     'yoda': [2, 'never'],
     'prefer-const': 2,
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'object-curly-spacing': [2, 'always', {
       objectsInObjects: false
     }],
