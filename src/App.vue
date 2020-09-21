@@ -5,6 +5,7 @@
         <router-view class="router" />
       </keep-alive>
     </transition>
+    <player />
   </div>
 </template>
 <script>

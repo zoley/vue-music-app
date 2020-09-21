@@ -17,7 +17,7 @@
       :scroll-data="songList"
       @scroll="onScroll"
     >
-      <song-list :list-data="songList" />
+      <song-list :list-data="songList" @select-item="handleSelectSong" />
     </scroll>
     <div v-show="songList.length<1" class="loading-container">
       <loading />
@@ -27,8 +27,8 @@
 
 <script>
 import { getSingerDetailById } from '@/api/singer'
-import { mapState } from 'vuex'
-import { createNewSong } from '@/utils/index'
+import { mapState, mapActions } from 'vuex'
+import Utils from '@/utils/index'
 const NAV_HEIGHT = 44
 export default {
   data() {
@@ -95,13 +95,16 @@ export default {
     this.$refs.songListRef.$el.style.top = this.imageH + 'px'
   },
   methods: {
+    ...mapActions('song', [
+      'SELECT_SONG_PLAY'
+    ]),
     /**
      * 获取歌手详情页
      */
     getDetailData() {
       getSingerDetailById(this.mid).then((res) => {
         if (res.code === 0) {
-          this.songList = res.data.list.map(x => createNewSong(x.musicData))
+          this.songList = res.data.list.map(x => Utils.createNewSong(x.musicData))
           this.showPlayBtn = true
         }
       })
@@ -112,6 +115,14 @@ export default {
      */
     onScroll(pos) {
       this.scrollY = pos.y
+    },
+    /**
+     * 处理选中某个歌曲事件
+     * @param item 歌曲对象
+     * @param index 歌曲索引
+     */
+    handleSelectSong(item, index) {
+      this.SELECT_SONG_PLAY({ list: this.songList, index })
     }
 
   }

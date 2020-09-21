@@ -1,3 +1,4 @@
+
 /*
  * 获取汉字首字母 -https://github.com/hotoo/pinyin
  * https://www.javascriptcn.com/read-54459.html
@@ -7,7 +8,7 @@ const pinyin = require('pinyin')
  * 处理汉字转换拼音首字母
  * @param word
  */
-export function handlerFirstLetter(word) {
+function handlerFirstLetter(word) {
   let firstLetterStr = ''
   pinyin(word, {
     // 是否启用分词模式，中文分词有助于极大的降低多音字问题。 但性能会极大的下降，内存也会使用更多
@@ -26,7 +27,7 @@ export function handlerFirstLetter(word) {
  * 创建歌曲对象
  * @param {*} musicData
  */
-export function createNewSong(musicData) {
+function createNewSong(musicData) {
   class Song {
     constructor({ id, mid, singer, name, album, duration, image, url }) {
       this.id = id
@@ -57,4 +58,37 @@ export function createNewSong(musicData) {
  */
 function filterSinger(singer) {
   return singer.map(x => x.name).join('/') || ''
+}
+
+/**
+ * 获取最小值和最大值之间的随机值
+ * @param {*} min 最小值
+ * @param {*} max 最大值
+ */
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+/**
+ * 洗牌-随机
+ * @param {*} arr 数组
+ */
+const shuffle = (arr) => {
+  const arrClone = arr
+  arrClone.forEach((x, i, _arr) => {
+    const j = getRandomInt(0, i)
+    const temp = _arr[i]
+    _arr[i] = _arr[j]
+    _arr[j] = temp
+  })
+  return arrClone
+}
+
+export default {
+  // 处理汉字转换拼音首字母
+  handlerFirstLetter,
+  // 创建歌曲对象
+  createNewSong,
+  // 洗牌
+  shuffle
 }

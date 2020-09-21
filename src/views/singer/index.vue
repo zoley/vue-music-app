@@ -51,7 +51,7 @@
 
 <script>
 import { getSingerList } from '@/api/singer'
-import { handlerFirstLetter } from '@/utils'
+import Utils from '@/utils'
 import { mapMutations } from 'vuex'
 export default {
   data() {
@@ -151,7 +151,7 @@ export default {
       const tempList = list.map(item => {
         return {
           ...item,
-          firstLetter: handlerFirstLetter(item.singer_name).substring(0, 1)
+          firstLetter: Utils.handlerFirstLetter(item.singer_name).substring(0, 1)
         }
       })
       const map = {

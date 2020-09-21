@@ -6,6 +6,7 @@
         :key="index"
         v-fb="{cls:'tap-active'}"
         class="li"
+        @click="selectItem(item,index)"
       >
         <h3 class="name">
           {{ item.name }}
@@ -24,6 +25,7 @@ export default {
   components: {
   },
   props: {
+    // 数据列表
     listData: {
       type: Array,
       default() {
@@ -41,7 +43,14 @@ export default {
   mounted() {
   },
   methods: {
-
+    /**
+     * 选中歌曲
+     * @param item 歌曲对象
+     * @param index 索引
+     */
+    selectItem(item, index) {
+      this.$emit('select-item', item, index)
+    }
   }
 }
 </script>
@@ -52,10 +61,16 @@ export default {
       padding:$xs $sm;
       .name{
         margin-bottom: $xs;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         @include font_sec_color($font-color-theme-sec);
       }
       .desc{
         line-height: 20px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
