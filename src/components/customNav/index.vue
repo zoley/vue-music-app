@@ -98,7 +98,7 @@ export default {
         height: 100%;
         justify-content: center;
         .iconfont {
-          font-size: 24px;
+          @include font_size($font_vast);
         }
       }
     }
