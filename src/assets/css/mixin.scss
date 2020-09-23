@@ -17,6 +17,12 @@
     color:$font-color-theme-sec1;
   }
 }
+@mixin font_third_color($color){
+	color:$color;
+  [data-theme="theme1"] & {
+    color:$font-color-theme-third1;
+  }
+}
 @mixin font_active_color($color){
 	color:$color;
   [data-theme="theme1"] & {
@@ -33,6 +39,12 @@
   background-color:$color;
   [data-theme="theme1"] & {
     background-color:$bg-color-theme-sec1;
+  }
+}
+@mixin bg_third_color($color){
+  background-color:$color;
+  [data-theme="theme1"] & {
+    background-color:$bg-color-theme-third1;
   }
 }
 @mixin bg_foot_color($color){

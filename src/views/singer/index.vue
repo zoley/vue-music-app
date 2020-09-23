@@ -274,6 +274,7 @@ export default {
           height:36px;
           border-radius:50%;
           margin-right:$sm;
+          @include bg_third_color($bg-color-theme-third);
         }
         .text{
           font-size: $font_small;

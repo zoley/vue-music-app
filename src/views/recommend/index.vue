@@ -95,8 +95,8 @@ export default {
           height: 70px;
           border-radius: $radius;
           overflow: hidden;
-          background: #f2f2f2;
           margin-right: $sm;
+          @include bg_third_color($bg-color-theme-third);
           img {
             width: 100%;
             height: 100%;

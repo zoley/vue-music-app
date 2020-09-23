@@ -1,79 +1,90 @@
 <template>
-  <div class="player-wrap">
-    <div v-show="fullScreen" class="normal-player">
-      <div class="background">
-        <img class="img" :src="currentSong.image" alt="">
-      </div>
-      <div class="top">
-        <div v-fb class="down" @click="closeFullScreen">
-          <i class="iconfont i-down" />
-        </div>
-        <h2 class="h2">
-          {{ currentSong.name }}
-        </h2>
-        <h3 class="h3">
-          {{ currentSong.singer }}
-        </h3>
-      </div>
-      <div class="middle">
-        <div class="middle-left">
-          <div class="cd-wrap">
-            <div class="cd">
-              <img class="img" :src="currentSong.image" alt="">
-            </div>
-          </div>
-          <div class="lyric">
-            我这里是歌词啊
-          </div>
-        </div>
-      </div>
-      <div class="bottom">
-        <div class="progress-wrap">
-          1
-        </div>
-        <div class="operators">
-          <div class="operate-item" @click="changeMode">
-            <i :class="iconMode" />
-          </div>
-          <div class="operate-item tab" @click="prevSong">
-            <i class="iconfont i-shangyiqu" />
-          </div>
-          <div class="operate-item center" @click="togglePlay">
-            <i :class="iconPlay" />
-          </div>
-          <div class="operate-item tab" @click="nextSong">
-            <i class="iconfont i-xiayiqu" />
-          </div>
-          <div class="operate-item" @click="toggleFavorite">
-            <i :class="iconFavorite" />
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-show="!fullScreen" class="mini-player">
-      <div class="cd-box">
-        <div class="cd">
+  <div v-show="playList.length>0" class="player-wrap">
+    <transition
+      name="normal"
+      @enter="enter"
+      @after-enter="afterEnter"
+      @leave="leave"
+      @after-leave="afterLeave"
+    >
+      <div v-show="fullScreen" class="normal-player">
+        <div class="background">
           <img class="img" :src="currentSong.image" alt="">
         </div>
-        <div>
-          <h3 class="h3">
+        <div class="top">
+          <div v-fb class="down" @click="toogleFullScreen">
+            <i class="iconfont i-down" />
+          </div>
+          <h2 class="h2">
             {{ currentSong.name }}
-          </h3>
-          <h4 class="h4">
+          </h2>
+          <h3 class="h3">
             {{ currentSong.singer }}
-          </h4>
+          </h3>
+        </div>
+        <div class="middle">
+          <div class="middle-left">
+            <div class="cd-wrap">
+              <div ref="cdRef" class="cd">
+                <img class="img" :class="playing?'play':'play pause'" :src="currentSong.image" alt="">
+              </div>
+            </div>
+            <div class="lyric">
+              我这里是歌词啊
+            </div>
+          </div>
+        </div>
+        <div class="bottom">
+          <div class="progress-wrap">
+            1
+          </div>
+          <div class="operators">
+            <div class="operate-item" @click="changeMode">
+              <i :class="iconMode" />
+            </div>
+            <div class="operate-item tab" @click="prevSong">
+              <i class="iconfont i-shangyiqu" />
+            </div>
+            <div class="operate-item center" @click="togglePlay">
+              <i :class="iconPlay" />
+            </div>
+            <div class="operate-item tab" @click="nextSong">
+              <i class="iconfont i-xiayiqu" />
+            </div>
+            <div class="operate-item" @click="toggleFavorite">
+              <i :class="iconFavorite" />
+            </div>
+          </div>
         </div>
       </div>
-      <div>
-        <i :class="iconPlay" />
-        <i class="iconfont icon-gedan" />
+    </transition>
+    <transition name="mini">
+      <div v-show="!fullScreen" class="mini-player">
+        <div class="cd-box" @click="toogleFullScreen">
+          <div class="cd">
+            <img class="img" :class="playing?'play':'play pause'" :src="currentSong.image" alt="">
+          </div>
+          <div class="name-singer">
+            <h3 class="h3">
+              {{ currentSong.name }}
+            </h3>
+            <h4 class="h4">
+              {{ currentSong.singer }}
+            </h4>
+          </div>
+        </div>
+        <div class="operate">
+          <i :class="iconPlay" />
+          <i class="iconfont i-gedan" />
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
+const Animation = require('create-keyframe-animation')
 import Utils from '@/utils'
 export default {
   name: 'Player',
@@ -118,10 +129,10 @@ export default {
       'SET_CURRENT_INDEX'
     ]),
     /**
-     * 关闭全屏显示状态
+     * 切换全屏显示状态
      */
-    closeFullScreen() {
-      this.SET_FULL_SCREEN(false)
+    toogleFullScreen() {
+      this.SET_FULL_SCREEN(!this.fullScreen)
     },
     /**
      * 改变播放模式
@@ -152,6 +163,74 @@ export default {
      * 切换喜欢
      */
     toggleFavorite() {
+    },
+    /**
+     * 获取cd动画目标的相对位置、缩放大小
+     */
+    _getTargetPosScale() {
+      const wrapWidth = Math.min(window.innerWidth, 1024)
+      const elWidth = wrapWidth * 0.8
+      const elTop = 100
+      const targetWidth = 40
+      const targetLeft = 20
+      const targetBottom = 10
+      const scale = targetWidth / elWidth
+      const x = -(wrapWidth / 2 - (targetWidth / 2 + targetLeft))
+      const y = window.innerHeight - elTop - (elWidth / 2) - (targetWidth / 2) - targetBottom
+      return { x, y, scale }
+    },
+    /**
+     * transition 动画控制 进入
+     * @param el 目标dom
+     * @param done 进入之后执行方法
+     */
+    enter(el, done) {
+      const { x, y, scale } = this._getTargetPosScale()
+      const animation = {
+        0: {
+          transform: `translate3d(${x}px,${y}px,0) scale(${scale})`
+        },
+        60: {
+          transform: `translate3d(0,0,0) scale(1.1)`
+        },
+        100: {
+          transform: `translate3d(0,0,0) scale(1)`
+        }
+      }
+      Animation.registerAnimation({
+        name: 'move',
+        animation,
+        presets: {
+          duration: 400,
+          easing: 'linear'
+        }
+      })
+      Animation.runAnimation(this.$refs.cdRef, 'move', done)
+    },
+    /**
+     * transition 动画控制 进入之后
+     */
+    afterEnter() {
+      Animation.unregisterAnimation('move')
+      this.$refs.cdRef.style.animation = ''
+    },
+    /**
+     * transition 动画控制 离开
+     * @param el 目标dom
+     * @param done 离开之后执行方法
+     */
+    leave(el, done) {
+      this.$refs.cdRef.style.transition = 'all 0.4s'
+      const { x, y, scale } = this._getTargetPosScale()
+      this.$refs.cdRef.style.transform = `translate3d(${x}px,${y}px,0) scale(${scale})`
+      this.$refs.cdRef.addEventListener('transitionend', done)
+    },
+    /**
+     * transition 动画控制 离开之后
+     */
+    afterLeave() {
+      this.$refs.cdRef.style.transition = ''
+      this.$refs.cdRef.style.transform = ''
     }
   }
 }
@@ -169,6 +248,21 @@ export default {
       max-width:1024px;
       margin:0 auto;
       @include bg_color($bg-color-theme);
+      &.normal-enter-active,&.normal-leave-active{
+        transition: all .4s ease;
+        .top,.bottom{
+          transition: all 0.4s cubic-bezier(0.86, 0.18, 0.82, 1.32)
+        }
+      }
+      &.normal-enter,&.normal-leave-to{
+        opacity:0;
+        .top{
+          transform: translate3d(0, -100px, 0)
+        }
+        .bottom{
+          transform: translate3d(0, 100px, 0)
+        }
+      }
       .background{
         position:absolute;
         left:0;
@@ -240,8 +334,14 @@ export default {
               height:100%;
               object-fit: cover;
               border-radius:50%;
-              border:10px solid hsla(0,0%,100%,.1);;
+              border:10px solid hsla(0,0%,100%,.1);
               box-sizing: border-box;
+              &.play{
+                animation: rotate 20s infinite linear;
+              }
+              &.pause{
+                animation-play-state: paused;
+              }
             }
           }
         }
@@ -249,7 +349,7 @@ export default {
           text-align: center;
           line-height: 44px;
           margin-top:$xl;
-          @include font_color($font-color-theme);
+          @include font_third_color($font-color-theme-third);
           @include font_size($font-medium);
         }
       }
@@ -294,7 +394,65 @@ export default {
       z-index:11;
       max-width:1024px;
       margin:0 auto;
-      @include bg_color($bg-color-theme-sec);
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      @include bg_sec_color($bg-color-theme-sec);
+      &.mini-enter-active,&.mini-leave-active{
+        transition: all .4s ease;
+      }
+      &.mini-enter,&.mini-leave-to{
+        opacity:0;
+      }
+      .cd-box{
+        flex:1;
+        height:100%;
+        display:flex;
+        justify-content: flex-start;
+        align-items: center;
+        .cd{
+          width:40px;
+          height:40px;
+          border-radius:50%;
+          margin:0 $xs 0 $sm;
+          overflow: hidden;
+          .img{
+            width:100%;
+            height:100%;
+            border-radius:50%;
+            &.play{
+              animation: rotate 10s infinite linear;
+            }
+            &.pause{
+              animation-play-state: paused;
+          }
+          }
+        }
+        .name-singer{
+          @include font_sec_color($font-color-theme-sec);
+          .h4{
+            margin-top:$xxs;
+            @include font_color($font-color-theme);
+          }
+        }
+      }
+      .operate{
+        .iconfont{
+          font-size:36px;
+          opacity:0.7;
+          padding-right:$xs;
+          @include font_active_color($font-color-theme-active);
+        }
+      }
     }
+  }
+  @keyframes rotate {
+    0% {transform:rotate(0)}
+    100% {transform:rotate(360deg)}
+  }
+  @-webkit-keyframes rotate {
+    0% {transform:rotate(0)}
+    100% {transform:rotate(360deg)}
   }
 </style>
