@@ -74,11 +74,12 @@
           </div>
         </div>
         <div class="operate">
-          <i :class="iconPlay" />
+          <i :class="iconPlay" @click="togglePlay" />
           <i class="iconfont i-gedan" />
         </div>
       </div>
     </transition>
+    <audio ref="audioRef" :src="currentSong.url" @play="audioReady" @ended="audioEnd" @timeupdate="audioUpdateTime" />
   </div>
 </template>
 
@@ -112,9 +113,16 @@ export default {
     // 是否喜欢
     iconFavorite() {
       return this.playing ? 'iconfont i-xin1' : 'iconfont i-xin2'
+    },
+    // 音乐dom
+    audioRef() {
+      return this.$refs.audioRef
     }
   },
   watch: {
+    playing(newVal) {
+      newVal ? this.audioRef.play() : this.audioRef.pause()
+    }
   },
   created() {
   },
@@ -231,6 +239,24 @@ export default {
     afterLeave() {
       this.$refs.cdRef.style.transition = ''
       this.$refs.cdRef.style.transform = ''
+    },
+    /**
+     * 歌曲准备就绪
+     */
+    audioReady() {
+
+    },
+    /**
+     * 歌曲结束
+     */
+    audioEnd() {
+
+    },
+    /**
+     * 歌曲时间更新
+     */
+    audioUpdateTime() {
+
     }
   }
 }

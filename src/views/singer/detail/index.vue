@@ -27,6 +27,7 @@
 
 <script>
 import { getSingerDetailById } from '@/api/singer'
+import { getRealSongUrl } from '@/api/song'
 import { mapState, mapActions } from 'vuex'
 import Utils from '@/utils/index'
 const NAV_HEIGHT = 44
@@ -104,7 +105,7 @@ export default {
     getDetailData() {
       getSingerDetailById(this.mid).then((res) => {
         if (res.code === 0) {
-          this.songList = res.data.list.map(x => Utils.createNewSong(x.musicData))
+          this.songList = getRealSongUrl(res.data.list.map(x => Utils.createNewSong(x.musicData)))
           this.showPlayBtn = true
         }
       })
