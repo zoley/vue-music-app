@@ -42,13 +42,13 @@
             <div class="operate-item" @click="changeMode">
               <i :class="iconMode" />
             </div>
-            <div class="operate-item tab" @click="prevSong">
+            <div class="operate-item tab" @click="prevSong" :class="isDisabled">
               <i class="iconfont i-shangyiqu" />
             </div>
-            <div class="operate-item center" @click="togglePlay">
+            <div class="operate-item center" @click="togglePlay" :class="isDisabled">
               <i :class="iconPlay" />
             </div>
-            <div class="operate-item tab" @click="nextSong">
+            <div class="operate-item tab" @click="nextSong" :class="isDisabled">
               <i class="iconfont i-xiayiqu" />
             </div>
             <div class="operate-item" @click="toggleFavorite">
@@ -74,12 +74,12 @@
           </div>
         </div>
         <div class="operate">
-          <i :class="iconPlay" @click="togglePlay" />
+          <i :class="iconPlay" @click="togglePlay"/>
           <i class="iconfont i-gedan" />
         </div>
       </div>
     </transition>
-    <audio ref="audioRef" :src="currentSong.url" @play="audioReady" @ended="audioEnd" @timeupdate="audioUpdateTime" />
+    <audio ref="audioRef" :src="currentSong.url" @canplay="audioReady" @ended="audioEnd" @timeupdate="audioUpdateTime" />
   </div>
 </template>
 
@@ -91,6 +91,8 @@ export default {
   name: 'Player',
   data() {
     return {
+      // 是否可以播放
+      readyPlay: false
     }
   },
   computed: {
@@ -114,14 +116,31 @@ export default {
     iconFavorite() {
       return this.playing ? 'iconfont i-xin1' : 'iconfont i-xin2'
     },
+    // 是否禁用置灰
+    isDisabled() {
+      return this.readyPlay ? '' : 'disabled'
+    },
     // 音乐dom
     audioRef() {
       return this.$refs.audioRef
     }
   },
   watch: {
+    // 播放状态监听
     playing(newVal) {
-      newVal ? this.audioRef.play() : this.audioRef.pause()
+      if (!this.readyPlay) return
+      this.$nextTick(() => {
+        newVal ? this.audioRef.play() : this.audioRef.pause()
+      })
+    },
+    // 当前歌曲监听
+    currentSong: {
+      handler(newVal) {
+        this.$nextTick(() => {
+          this.$refs.audioRef.play()
+        })
+      },
+      deep: true
     }
   },
   created() {
@@ -153,18 +172,38 @@ export default {
      * 上一首
      */
     prevSong() {
-
+      if (!this.readyPlay) return
+      let index = this.currentIndex - 1
+      if (index < 0) {
+        index = this.playList.length - 1
+      }
+      this.SET_CURRENT_INDEX(index)
+      if (!this.playing) {
+        this.togglePlay()
+      }
+      this.readyPlay = false
     },
     /**
      * 下一首
      */
     nextSong() {
+      if (!this.readyPlay) return
+      let index = this.currentIndex + 1
+      if (index === this.playList.length) {
+        index = 0
+      }
+      this.SET_CURRENT_INDEX(index)
 
+      if (!this.playing) {
+        this.togglePlay()
+      }
+      this.readyPlay = false
     },
     /**
      * 切换播放/暂停
      */
     togglePlay() {
+      if (!this.readyPlay) return
       this.SET_PLAYING_STATE(!this.playing)
     },
     /**
@@ -244,7 +283,7 @@ export default {
      * 歌曲准备就绪
      */
     audioReady() {
-
+      this.readyPlay = true
     },
     /**
      * 歌曲结束
@@ -405,6 +444,11 @@ export default {
             &.tab{
               .iconfont{
                 font-size:34px;
+              }
+            }
+            &.disabled{
+              .iconfont{
+                @include font_color($font-color-theme);
               }
             }
           }
