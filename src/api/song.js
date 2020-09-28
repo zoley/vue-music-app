@@ -1,7 +1,5 @@
-import { commonParams, options } from './config'
-import jsonp from '@/utils/jsonp'
+import { commonParams } from './config'
 import request from '@/utils/request'
-import axios from 'axios'
 let _uid = ''
 // 获取歌手列表
 export function getRealSongUrl(songs) {
@@ -26,11 +24,33 @@ export function getRealSongUrl(songs) {
     }
   }
   return new Promise((resolve, reject) => {
+    let tryTime = 3
     function ajax() {
-      return axios.post(url, {
-        comm,
-        url_mid
+      return request({
+        method: 'post',
+        url,
+        headers: {
+          json: true
+        },
+        data: {
+          comm,
+          url_mid
+        }
+      }).then((res) => {
+        const info = res.url_mid && res.url_mid.data && res.url_mid.data.midurlinfo[0]
+        if (info) {
+          resolve(res)
+        } else {
+          retry()
+        }
       })
+    }
+    function retry() {
+      if (--tryTime >= 0) {
+        ajax()
+      } else {
+        reject(new Error('Can not get the songs url'))
+      }
     }
     ajax()
   })

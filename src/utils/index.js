@@ -1,4 +1,4 @@
-
+import { getRealSongUrl } from '../api/song'
 /*
  * 获取汉字首字母 -https://github.com/hotoo/pinyin
  * https://www.javascriptcn.com/read-54459.html
@@ -54,6 +54,24 @@ function createNewSong(musicData) {
 }
 
 /**
+ *
+ * @param {*} songs
+ */
+function handleSongUrl(songs) {
+  if (!songs.length) {
+    return Promise.resolve(songs)
+  }
+  return getRealSongUrl(songs).then((res) => {
+    const info = res.url_mid.data.midurlinfo
+    info.forEach((x, i) => {
+      const song = songs[i]
+      song.url = `http://dl.stream.qqmusic.qq.com/${x.purl}`
+    })
+    return songs
+  })
+}
+
+/**
  * 设置歌手
  * @param {*} singer
  */
@@ -91,5 +109,7 @@ export default {
   // 创建歌曲对象
   createNewSong,
   // 洗牌
-  shuffle
+  shuffle,
+  // 处理歌曲播放链接
+  handleSongUrl
 }

@@ -27,7 +27,6 @@
 
 <script>
 import { getSingerDetailById } from '@/api/singer'
-import { getRealSongUrl } from '@/api/song'
 import { mapState, mapActions } from 'vuex'
 import Utils from '@/utils/index'
 const NAV_HEIGHT = 44
@@ -105,10 +104,19 @@ export default {
     getDetailData() {
       getSingerDetailById(this.mid).then((res) => {
         if (res.code === 0) {
-          this.songList = getRealSongUrl(res.data.list.map(x => Utils.createNewSong(x.musicData)))
+          Utils.handleSongUrl(res.data.list.filter(y => this.isValidMusic(y.musicData)).map(x => Utils.createNewSong(x.musicData))).then(songs => {
+            this.songList = songs
+          })
           this.showPlayBtn = true
         }
       })
+    },
+    /**
+     * 是否为免费音乐啊
+     * @param musicData 音乐数据
+     */
+    isValidMusic(musicData) {
+      return musicData.songid && musicData.albummid && (!musicData.pay || musicData.pay.payplay === 0)
     },
     /**
      * 监听列表滚动
