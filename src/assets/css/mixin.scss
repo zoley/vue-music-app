@@ -66,6 +66,12 @@
     border-color:$border-color-theme1;
   }
 }
+@mixin border_sec_color($color){
+  border-color:$color;
+  [data-theme="theme1"] & {
+    border-color:$font-color-theme-sec1;
+  }
+}
 @mixin border_active_color($color){
   border-color:$color;
   [data-theme="theme1"] & {

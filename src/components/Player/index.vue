@@ -36,19 +36,23 @@
         </div>
         <div class="bottom">
           <div class="progress-wrap">
-            1
+            <span class="time time-l">{{ currentTime | filterTime(this) }}</span>
+            <div class="progress-bar-warp">
+              <progress-bar :percent="percent" @changePercent="onPercentChange" />
+            </div>
+            <span class="time time-r">{{ currentSong.duration | filterTime(this) }}</span>
           </div>
           <div class="operators">
             <div class="operate-item" @click="changeMode">
               <i :class="iconMode" />
             </div>
-            <div class="operate-item tab" @click="prevSong" :class="isDisabled">
+            <div class="operate-item tab" :class="isDisabled" @click="prevSong">
               <i class="iconfont i-shangyiqu" />
             </div>
-            <div class="operate-item center" @click="togglePlay" :class="isDisabled">
+            <div class="operate-item center" :class="isDisabled" @click="togglePlay">
               <i :class="iconPlay" />
             </div>
-            <div class="operate-item tab" @click="nextSong" :class="isDisabled">
+            <div class="operate-item tab" :class="isDisabled" @click="nextSong">
               <i class="iconfont i-xiayiqu" />
             </div>
             <div class="operate-item" @click="toggleFavorite">
@@ -74,7 +78,7 @@
           </div>
         </div>
         <div class="operate">
-          <i :class="iconPlay" @click="togglePlay"/>
+          <i :class="iconPlay" @click="togglePlay" />
           <i class="iconfont i-gedan" />
         </div>
       </div>
@@ -86,13 +90,25 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
 const Animation = require('create-keyframe-animation')
-import Utils from '@/utils'
+// import Utils from '@/utils'
 export default {
   name: 'Player',
+  filters: {
+    // 过滤转换时间格式
+    filterTime(val, that) {
+      val = val | 0
+      const min = val / 60 | 0
+      // const sec = val % 60 > 9 ? val % 60 : '0' + val % 60
+      const sec = that.suppleNum(val % 60, 2)
+      return min + ':' + sec
+    }
+  },
   data() {
     return {
       // 是否可以播放
-      readyPlay: false
+      readyPlay: false,
+      // 当前播放时间
+      currentTime: 0
     }
   },
   computed: {
@@ -123,6 +139,10 @@ export default {
     // 音乐dom
     audioRef() {
       return this.$refs.audioRef
+    },
+    // 歌曲播放进度
+    percent() {
+      return this.currentTime / this.currentSong.duration
     }
   },
   watch: {
@@ -156,13 +176,26 @@ export default {
       'SET_CURRENT_INDEX'
     ]),
     /**
+     * 给数字前面补零
+     * @param val 数值
+     * @param num 需要的位数
+     */
+    suppleNum(val, num) {
+      let len = val.toString().length
+      while (len < num) {
+        val = '0' + val
+        len++
+      }
+      return val
+    },
+    /**
      * 切换全屏显示状态
      */
     toogleFullScreen() {
       this.SET_FULL_SCREEN(!this.fullScreen)
     },
     /**
-     * 改变播放模式
+     * 改变播放模式 播放模式 sequence: 0, loop: 1, random: 2
      */
     changeMode() {
       const a = this.mode ? 0 : 1
@@ -289,13 +322,39 @@ export default {
      * 歌曲结束
      */
     audioEnd() {
-
+      this.currentTime = 0
+      // 播放模式 sequence: 0, loop: 1, random: 2
+      if (this.mode === 1) {
+        this.singleLoop()
+      } else {
+        this.nextSong()
+      }
+    },
+    /**
+     * 单曲循环
+     */
+    singleLoop() {
+      this.$refs.audioRef.currentTime = 0
+      this.$refs.audioRef.play()
+      this.SET_PLAYING_STATE(true)
     },
     /**
      * 歌曲时间更新
+     * @param e 事件
      */
-    audioUpdateTime() {
-
+    audioUpdateTime(e) {
+      this.currentTime = e.target.currentTime
+    },
+    /**
+     * 播放进度改变
+     * @param percent 进度
+     */
+    onPercentChange(percent) {
+      const time = percent * this.currentSong.duration
+      this.currentTime = this.$refs.audioRef.currentTime = time
+      if (!this.playing) {
+        this.togglePlay()
+      }
     }
   }
 }
@@ -423,6 +482,20 @@ export default {
         width:100%;
         bottom:50px;
         left:0;
+        .progress-wrap{
+          display:flex;
+          justify-content: space-between;
+          align-items: center;
+          width:80%;
+          margin:0 auto $xs;
+          .progress-bar-warp{
+            flex:1;
+            text-align: center;
+          }
+          .time{
+            @include font_sec_color($font-color-theme-sec);
+          }
+        }
         .operators{
           display:flex;
           flex-direction: row;
