@@ -38,7 +38,7 @@
           <div class="progress-wrap">
             <span class="time time-l">{{ currentTime | filterTime(this) }}</span>
             <div class="progress-bar-warp">
-              <progress-bar :percent="percent" @changePercent="onPercentChange" />
+              <progress-bar :percent="percent" @changePercent="onPercentChange" @changingPercent="onPercentChanging" />
             </div>
             <span class="time time-r">{{ currentSong.duration | filterTime(this) }}</span>
           </div>
@@ -122,7 +122,8 @@ export default {
     ...mapGetters('song', ['currentSong']),
     // 播放模式
     iconMode() {
-      return this.mode ? 'iconfont i-suiji' : 'iconfont i-liebiaoxunhuan'
+      // 播放模式 sequence: 0, loop: 1, random: 2
+      return this.mode === 0 ? 'iconfont i-liebiaoxunhuan' : this.mode === 1 ? 'iconfont i-danquxunhuan' : 'iconfont i-suiji'
     },
     // 是否播放
     iconPlay() {
@@ -198,7 +199,7 @@ export default {
      * 改变播放模式 播放模式 sequence: 0, loop: 1, random: 2
      */
     changeMode() {
-      const a = this.mode ? 0 : 1
+      const a = (this.mode + 1) % 3
       this.SET_MODE(a)
     },
     /**
@@ -355,6 +356,13 @@ export default {
       if (!this.playing) {
         this.togglePlay()
       }
+    },
+    /**
+     * 播放进度改变中
+     * @param percent 进度
+     */
+    onPercentChanging(percent) {
+      this.currentTime = percent * this.currentSong.duration
     }
   }
 }

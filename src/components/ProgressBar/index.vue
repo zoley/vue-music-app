@@ -2,7 +2,13 @@
   <div ref="progressBarRef" class="parogress-bar" @click="progressBarClick">
     <div class="bar-inner">
       <div ref="progressRef" class="progress" />
-      <div ref="progressButtonRef" class="progress-button-wrap">
+      <div
+        ref="progressButtonRef"
+        class="progress-button-wrap"
+        @touchstart.prevent="progressTouchStart"
+        @touchmove.prevent="progressTouchMove"
+        @touchend.prevent="progressTouchEnd"
+      >
         <div class="progress-button" />
       </div>
     </div>
@@ -45,7 +51,7 @@ export default {
      * @param percent 进度百分比
      */
     setProgressOffset(percent) {
-      if (percent >= 0) {
+      if (percent >= 0 && !this.touch.initiate) {
         const barWidth = this.$refs.progressBarRef.clientWidth - 16
         const offsetWidth = percent * barWidth
         this.setOffsetWidth(offsetWidth)
@@ -66,17 +72,48 @@ export default {
     progressBarClick(e) {
       //  这里当我们点击 progressBtn 的时候，e.offsetX 获取不对
       const rect = this.$refs.progressBarRef.getBoundingClientRect()
-      const offsetWith = e.pageX - rect.left
-      this.setOffsetWidth(offsetWith)
-      this.emitPercent(offsetWith)
+      const offsetWidth = e.pageX - rect.left
+      this.setOffsetWidth(offsetWidth)
+      this.emitPercent(offsetWidth)
     },
     /**
      * 发送子数据到父集
      * @param w 宽度
+     * @param dragging 是否正在拖动
      */
-    emitPercent(w) {
+    emitPercent(w, dragging = false) {
       const tempPercent = w / (this.$refs.progressBarRef.clientWidth - 16)
-      this.$emit('changePercent', tempPercent)
+      if (dragging) {
+        this.$emit('changingPercent', tempPercent)
+      } else {
+        this.$emit('changePercent', tempPercent)
+      }
+    },
+    /**
+     * 拖动开始
+     */
+    progressTouchStart(e) {
+      this.touch.initiate = true
+      this.touch.startX = e.touches[0].pageX
+      this.touch.leftWidth = this.$refs.progressRef.clientWidth
+    },
+    /**
+     * 拖动中
+     */
+    progressTouchMove(e) {
+      if (!this.touch.initiate) return
+      const deltaX = e.touches[0].pageX - this.touch.startX
+      const offsetWidth = Math.min(this.$refs.progressBarRef.clientWidth - 16, Math.max(0, deltaX + this.touch.leftWidth))
+      this.setOffsetWidth(offsetWidth)
+      this.emitPercent(offsetWidth, true)
+    },
+    /**
+     * 拖动结束
+     */
+    progressTouchEnd(e) {
+      this.touch.initiate = false
+      const offsetWidth = this.$refs.progressRef.clientWidth
+      this.emitPercent(offsetWidth)
     }
   }
 }
