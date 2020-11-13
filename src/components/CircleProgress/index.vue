@@ -43,7 +43,7 @@ export default {
     // 进度条厚度
     radius: {
       type: Number,
-      default: 5
+      default: 3
     },
     // 进度条百分比
     progress: {

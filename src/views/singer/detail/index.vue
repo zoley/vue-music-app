@@ -2,7 +2,7 @@
   <div class="frame-wrap singer-detail-wrap">
     <custom-nav :title="currentSinger.name" :bar-type="2" />
     <div ref="bgImageRef" class="bg-avatar" :style="bgStyle">
-      <div v-show="showPlayBtn" class="play-box">
+      <div v-show="showPlayBtn" v-fb class="play-box" @click="handleRandomPlay">
         <i class="iconfont i-bofang" />
         <span>随机播放全部</span>
       </div>
@@ -96,7 +96,8 @@ export default {
   },
   methods: {
     ...mapActions('song', [
-      'SELECT_SONG_PLAY'
+      'SELECT_SONG_PLAY',
+      'RANDOM_SONG_PLAY'
     ]),
     /**
      * 获取歌手详情页
@@ -133,6 +134,12 @@ export default {
      */
     handleSelectSong(item, index) {
       this.SELECT_SONG_PLAY({ list: this.songList, index })
+    },
+    /**
+     * 处理随机播放
+     */
+    handleRandomPlay() {
+      this.RANDOM_SONG_PLAY({ list: this.songList })
     }
 
   }

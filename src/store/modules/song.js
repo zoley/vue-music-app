@@ -54,6 +54,16 @@ const song = {
       commit('SET_CURRENT_INDEX', index)
       commit('SET_PLAYING_STATE', true)
       commit('SET_FULL_SCREEN', true)
+    },
+    // 随机播放
+    RANDOM_SONG_PLAY({ commit, state }, { list }) {
+      commit('SET_SEQUENCE_LIST', list)
+      commit('SET_MODE', 2)
+      const randomList = Utils.shuffle(list)
+      commit('SET_PLAY_LIST', randomList)
+      commit('SET_CURRENT_INDEX', 0)
+      commit('SET_PLAYING_STATE', true)
+      commit('SET_FULL_SCREEN', true)
     }
 
   }

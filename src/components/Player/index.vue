@@ -78,8 +78,13 @@
           </div>
         </div>
         <div class="operate">
-          <circle-progress :width="32" :height="32" bar-color="#f00" :progress="percent*100">
-            <i :class="iconPlay" @click="togglePlay" />
+          <circle-progress
+            :width="32"
+            bar-color="var(--font-color-active)"
+            background-color="transparent"
+            :progress="percent*100"
+          >
+            <i :class="iconPlay" @click.stop="togglePlay" />
           </circle-progress>
           <i class="iconfont i-gedan" />
         </div>
@@ -92,7 +97,7 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
 const Animation = require('create-keyframe-animation')
-// import Utils from '@/utils'
+import Utils from '@/utils'
 export default {
   name: 'Player',
   filters: {
@@ -117,6 +122,7 @@ export default {
     ...mapState('song', [
       'playing',
       'playList',
+      'sequenceList',
       'fullScreen',
       'mode',
       'currentIndex'
@@ -129,7 +135,7 @@ export default {
     },
     // 是否播放
     iconPlay() {
-      return this.playing ? 'iconfont i-pause' : 'iconfont i-bofang'
+      return this.playing ? 'control iconfont i-pause' : 'control iconfont i-bofang'
     },
     // 是否喜欢
     iconFavorite() {
@@ -158,7 +164,8 @@ export default {
     },
     // 当前歌曲监听
     currentSong: {
-      handler(newVal) {
+      handler(newVal, oldVal) {
+        if (Object.is(newVal.id, oldVal.id)) return
         this.$nextTick(() => {
           this.$refs.audioRef.play()
         })
@@ -175,8 +182,8 @@ export default {
       'SET_FULL_SCREEN',
       'SET_PLAYING_STATE',
       'SET_MODE',
-      'SET_FULL_SCREEN',
-      'SET_CURRENT_INDEX'
+      'SET_CURRENT_INDEX',
+      'SET_PLAY_LIST'
     ]),
     /**
      * 给数字前面补零
@@ -203,6 +210,15 @@ export default {
     changeMode() {
       const a = (this.mode + 1) % 3
       this.SET_MODE(a)
+      let list = []
+      if (a === 2) {
+        list = Utils.shuffle(this.sequenceList)
+      } else {
+        list = this.sequenceList
+      }
+      const index = list.findIndex(x => Object.is(x.id, this.currentSong.id))
+      this.SET_CURRENT_INDEX(index)
+      this.SET_PLAY_LIST(list)
     },
     /**
      * 上一首
@@ -591,11 +607,20 @@ export default {
         }
       }
       .operate{
+        display:flex;
+        align-items: center;
+        width:90px;
         .iconfont{
           font-size:36px;
           opacity:0.7;
           padding-right:$xs;
           color:var(--font-color-active);
+          &.control{
+            position:absolute;
+            top:-1px;
+            left:-2px;
+            padding:0;
+          }
         }
       }
     }
