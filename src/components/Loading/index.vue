@@ -33,7 +33,7 @@ export default {
 <style lang="scss" scoped>
   .loading-wrap{
     text-align: center;
-    @include font_color($font-color-theme);
+    color:var(--font-color);
     .iconfont{
       font-size:20px;
       margin-bottom:$sm;

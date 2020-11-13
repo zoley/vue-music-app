@@ -86,7 +86,7 @@ export default {
       > .h3 {
         text-align: center;
         margin: $sm 0;
-        @include font_active_color($font-color-theme-active);
+        color:var(--font-color-active);
       }
       .li {
         padding: $xs $sm;
@@ -96,7 +96,7 @@ export default {
           border-radius: $radius;
           overflow: hidden;
           margin-right: $sm;
-          @include bg_third_color($bg-color-theme-third);
+          background:var(--bg-color-third);
           img {
             width: 100%;
             height: 100%;
@@ -107,7 +107,7 @@ export default {
           flex: 1;
           h3 {
             margin-bottom: $xs;
-            @include font_sec_color($font-color-theme-sec);
+            color:var(--font-color-sec);
           }
           p {
             line-height: 20px;

@@ -41,7 +41,7 @@ export default {
 </script>
 <style scoped lang="scss">
   #app{
-    @include bg_color($bg-color-theme);
+    background:var(--bg-color);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow: hidden;

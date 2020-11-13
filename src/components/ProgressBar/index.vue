@@ -132,7 +132,7 @@ export default {
     .progress{
       height:100%;
       width:0;
-      @include bg_foot_active_color($font-color-theme-active)
+      background:var(--font-color-active);
     }
     .progress-button-wrap{
       position:absolute;
@@ -147,8 +147,8 @@ export default {
         border:3px solid;
         border-radius:50%;
         box-sizing: border-box;
-        @include bg_foot_active_color($font-color-theme-active);
-        @include border_sec_color($font-color-theme-sec);
+        border:1px solid var(--font-color-sec);
+        background:var(--font-color-active);
       }
     }
   }

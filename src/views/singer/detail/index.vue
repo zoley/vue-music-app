@@ -104,6 +104,7 @@ export default {
     getDetailData() {
       getSingerDetailById(this.mid).then((res) => {
         if (res.code === 0) {
+          // ☆☆☆☆☆☆☆小难点☆☆☆☆☆☆☆☆
           Utils.handleSongUrl(res.data.list.filter(y => this.isValidMusic(y.musicData)).map(x => Utils.createNewSong(x.musicData))).then(songs => {
             this.songList = songs
           })
@@ -163,8 +164,8 @@ export default {
         margin:0 auto;
         text-align: center;
         font-size:$font_small;
-        @include border_active_color($font-color-theme-active);
-        @include font_active_color($font-color-theme-active);
+        color:var(--font-color-active);
+        border:1px solid var(--font-color-active);
         .iconfont{
           margin-right:$xs;
         }
@@ -188,7 +189,7 @@ export default {
     .bg-layer{
       position:relative;
       height:100vh;
-      @include bg_color($bg-color-theme);
+      background:var(--bg-color);
     }
     .loading-container{
       position:fixed;

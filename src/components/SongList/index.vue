@@ -64,7 +64,7 @@ export default {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        @include font_sec_color($font-color-theme-sec);
+        color:var(--font-color-sec);
       }
       .desc{
         line-height: 20px;

@@ -84,9 +84,9 @@ export default {
       text-decoration: none;
       height: 100%;
       line-height: 40px;
-      @include font_color($font-color-theme);
+      color:var(--font-color);
       &.router-link-active {
-        @include font_active_color($font-color-theme-active);
+        color:var(--font-color-active);
       }
     }
     .slide-line{
@@ -96,7 +96,7 @@ export default {
       height:2px;
       width:11%;
       transition: 0.2s all ease;
-      @include bg_foot_active_color($font-color-theme-active);
+      background:var(--font-color-active);
     }
   }
 }

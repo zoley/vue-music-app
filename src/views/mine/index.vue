@@ -42,7 +42,7 @@ export default {
       margin-bottom:$xs;
       padding:0 $xs;
       font-size:$font-mini;
-      @include bg_sec_color($bg-color-theme-sec);
+      background:var(--bg-color-sec);
       .iconfont{
         font-size:$font-mini;
       }
@@ -53,7 +53,7 @@ export default {
       right:0;
       bottom:0;
       top:0;
-      @include bg_color($bg-color-theme);
+      background:var(--bg-color);
       z-index:100;
       &.shift-enter-active,&.shift-leave-active{
         transition: 0.4s all ease;

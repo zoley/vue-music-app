@@ -78,7 +78,9 @@
           </div>
         </div>
         <div class="operate">
-          <i :class="iconPlay" @click="togglePlay" />
+          <circle-progress :width="32" :height="32" bar-color="#f00" :progress="percent*100">
+            <i :class="iconPlay" @click="togglePlay" />
+          </circle-progress>
           <i class="iconfont i-gedan" />
         </div>
       </div>
@@ -379,7 +381,7 @@ export default {
       z-index:11;
       max-width:1024px;
       margin:0 auto;
-      @include bg_color($bg-color-theme);
+      background:var(--bg-color);
       &.normal-enter-active,&.normal-leave-active{
         transition: all .4s ease;
         .top,.bottom{
@@ -412,16 +414,16 @@ export default {
       }
       .top{
         position:relative;
-        @include font_sec_color($font-color-theme-sec);
-        @include font_size($font-medium);
+        color:var(--font-color-sec);
+        font-size:$font_medium;
         .down{
           position:absolute;
           top:0;
           left:0;
           padding:$xs $sm;
-          @include font_active_color($font-color-theme-active);
+          color:var(--font-color-active);
           .iconfont{
-            @include font_size($font_vast);
+            font-size:$font_vast;
           }
         }
         .h2{
@@ -433,14 +435,14 @@ export default {
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
-          @include font_size($font_huge);
+          font-size:$font_huge;
         }
         .h3{
           text-align: center;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          @include font_size($font-medium);
+          font-size:$font_medium;
         }
       }
       .middle{
@@ -481,8 +483,8 @@ export default {
           text-align: center;
           line-height: 44px;
           margin-top:$xl;
-          @include font_third_color($font-color-theme-third);
-          @include font_size($font-medium);
+          color:var(--font-color-third);
+          font-size:$font_medium;
         }
       }
       .bottom{
@@ -501,7 +503,7 @@ export default {
             text-align: center;
           }
           .time{
-            @include font_sec_color($font-color-theme-sec);
+            color:var(--font-color-sec);
           }
         }
         .operators{
@@ -513,7 +515,7 @@ export default {
           .operate-item{
             flex:1;
             text-align: center;
-            @include font_active_color($font-color-theme-active);
+            color:var(--font-color-active);
             .iconfont{
               font-size:$xl;
             }
@@ -529,7 +531,7 @@ export default {
             }
             &.disabled{
               .iconfont{
-                @include font_color($font-color-theme);
+                color:var(--font-color);
               }
             }
           }
@@ -549,7 +551,7 @@ export default {
       justify-content: space-between;
       align-items: center;
       flex-direction: row;
-      @include bg_sec_color($bg-color-theme-sec);
+      background:var(--bg-color-sec);
       &.mini-enter-active,&.mini-leave-active{
         transition: all .4s ease;
       }
@@ -581,10 +583,10 @@ export default {
           }
         }
         .name-singer{
-          @include font_sec_color($font-color-theme-sec);
+          color:var(--font-color-sec);
           .h4{
             margin-top:$xxs;
-            @include font_color($font-color-theme);
+            color:var(--font-color);
           }
         }
       }
@@ -593,7 +595,7 @@ export default {
           font-size:36px;
           opacity:0.7;
           padding-right:$xs;
-          @include font_active_color($font-color-theme-active);
+          color:var(--font-color-active);
         }
       }
     }

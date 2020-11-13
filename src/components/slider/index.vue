@@ -153,11 +153,11 @@ export default {
       height:8px;
       border-radius:50%;
       transition:0.3s all linear;
-      @include bg_foot_color($font-color-theme);
+      background:var(--font-color);
       &.active{
         width:20px;
         border-radius:5px;
-        @include bg_foot_active_color($font-color-theme-active);
+        background:var(--font-color-active);
       }
     }
   }

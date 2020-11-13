@@ -93,7 +93,7 @@ function getRandomInt(min, max) {
  * @param {*} arr 数组
  */
 const shuffle = (arr) => {
-  const arrClone = arr
+  const arrClone = arr.slice()
   arrClone.forEach((x, i, _arr) => {
     const j = getRandomInt(0, i)
     const temp = _arr[i]

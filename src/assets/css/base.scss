@@ -20,7 +20,9 @@
   max-width: 1024px;
   min-height: 100vh;
   margin: 0 auto;
-  @include bg_color($bg-color-theme);
-  @include font_color($font-color-theme);
+  background: var(--bg-color);
+  color:var(--font-color);
 }
-.tap-active{@include bg_sec_color($bg-color-theme-sec);}
+.tap-active{
+  background:var(--bg-color-sec);
+}

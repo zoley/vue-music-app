@@ -261,8 +261,8 @@ export default {
       .h2{
         padding: $xs $sm;
         font-size: $font_mini;
-        @include bg_sec_color($bg-color-theme-sec);
-        @include font_sec_color($font-color-theme-sec);
+        background:var(--bg-color-sec);
+        color:var(--font-color-sec);
       }
       .li-child{
         display:flex;
@@ -274,7 +274,7 @@ export default {
           height:36px;
           border-radius:50%;
           margin-right:$sm;
-          @include bg_third_color($bg-color-theme-third);
+          background:var(--font-color-third);
         }
         .text{
           font-size: $font_small;
@@ -292,7 +292,7 @@ export default {
         height:20px;
         line-height: 20px;
         &.active{
-          @include font_active_color($font-color-theme-active);
+          color:var(--font-color-active);
         }
       }
     }
@@ -304,8 +304,8 @@ export default {
     width:100%;
     padding: $xs $sm;
     font-size: $font_mini;
-    @include bg_sec_color($bg-color-theme-sec);
-    @include font_sec_color($font-color-theme-sec);
+    background:var(--bg-color-sec);
+    color:var(--font-color-sec);
   }
   .loading-container {
     position: fixed;

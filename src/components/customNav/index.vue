@@ -87,9 +87,9 @@ export default {
     height: 44px;
     box-sizing: border-box;
     border-bottom: 1px solid;
-    @include border_color($border-color-theme);
-    @include font_size($font-medium);
-    @include font_active_color($font-color-theme-active);
+    color:var(--font-color-active);
+    font-size:$font_medium;
+    border:1px solid var(--border-color);
     .left-wrap {
       width: 50px;
       height: 100%;
@@ -98,7 +98,7 @@ export default {
         height: 100%;
         justify-content: center;
         .iconfont {
-          @include font_size($font_vast);
+          font-size:$font_vast;
         }
       }
     }

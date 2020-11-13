@@ -1,3 +1,18 @@
+
+/*主题颜色改版--之前的 @mixin 管理起来比较麻烦，而且不方便在html模板里使用*/
+
+:root{
+    /*主题色*/
+    --bg-color: #212121;//背景主题颜色
+    --bg-color-sec: #333;//背景次要主题颜色
+    --bg-color-third: rgba(255,255,255,0.1);//背景次次要主题颜色
+    --border-color: #343434;//边框主题颜色
+    --font-color : #999;//字体主题颜色默认
+    --font-color-sec : #fff;//字体次要主题颜色
+    --font-color-third : rgba(255, 255, 255, 0.7);//字体次要主题颜色
+    --font-color-active : #fdcd08;//字体高亮主题颜色
+}
+
 // base color
 $blue:#409EFF;
 $light-blue:#a0cfff;
@@ -12,27 +27,6 @@ $light-gray: #e9e9eb;
 
 $radius:4px;
 $light-radius:2px;
-
-//颜色定义规范
-$bg-color-theme: #212121;//背景主题颜色
-$bg-color-theme-sec: #333;//背景次要主题颜色
-$bg-color-theme-third: rgba(255,255,255,0.1);//背景次次要主题颜色
-$border-color-theme: #343434;//边框主题颜色
-$font-color-theme : #999;//字体主题颜色默认
-$font-color-theme-sec : #fff;//字体次要主题颜色
-$font-color-theme-third : rgba(255, 255, 255, 0.7);//字体次要主题颜色
-$font-color-theme-active : #fdcd08;//字体高亮主题颜色
-
-
-$bg-color-theme1: #fff;//背景主题颜色默认1
-$bg-color-theme-sec1: #f2f2f2;//背景次要主题颜色1
-$bg-color-theme-third1: rgba(0,0,0,0.1);//背景次次要主题颜色
-$border-color-theme1: #eee;//边框主题颜色1
-$font-color-theme1 : #666;//字体主题颜色1
-$font-color-theme-sec1 : #333;//字体次要主题颜色
-$font-color-theme-third1 : rgba(51,51,51, 0.7);//字体次要主题颜色
-$font-color-theme-active1 : #409EFF;//字体高亮主题颜色
- 
  
 //字体定义规范
 $font_mini:12px;

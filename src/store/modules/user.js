@@ -6,16 +6,16 @@ const user = {
   state: {
     themes: [{
       name: '玄潭黑',
-      code: 'theme',
+      code: 'theme1',
       color: '#212121',
       checked: true
     }, {
       name: '霜荼白',
-      code: 'theme1',
+      code: 'theme2',
       color: '#fff',
       checked: false
     }],
-    dataTheme: 'theme'
+    dataTheme: 'theme1'
   },
   getters: {
   },
