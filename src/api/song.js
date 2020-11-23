@@ -1,7 +1,7 @@
 import { commonParams } from './config'
 import request from '@/utils/request'
 let _uid = ''
-// 获取歌手列表
+// 获取歌曲列表
 export function getRealSongUrl(songs) {
   const url = '/pc/cgi-bin/musicu.fcg'
   const comm = Object.assign({}, commonParams, {
@@ -53,6 +53,27 @@ export function getRealSongUrl(songs) {
       }
     }
     ajax()
+  })
+}
+
+// 获取歌曲歌词
+export function getLyricById(id) {
+  const url = '/api/lyric/fcgi-bin/fcg_query_lyric_yqq.fcg'
+  const comm = Object.assign({}, commonParams, {
+    format: 'json',
+    platform: 'yqq.json',
+    needNewCode: 1,
+    nobase64: 1,
+    g_tk_new_20200303: 5381,
+    loginUin: 0,
+    hostUin: 0,
+    musicid: id
+  })
+
+  return request({
+    method: 'get',
+    url: url,
+    params: comm
   })
 }
 

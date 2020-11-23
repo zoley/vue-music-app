@@ -33,8 +33,27 @@
               我这里是歌词啊
             </div>
           </div>
+          <scroll ref="lyricScrollRef" class="middle-right" :scroll-data="currentLyric && currentLyric.lines">
+            <div class="lyric-wrapper">
+              <div v-if="currentLyric" class="lyric-box">
+                <p
+                  v-for="(line,index) in currentLyric.lines"
+                  :key="index"
+                  ref="lyricLineRef"
+                  class="lyric-text"
+                  :class="{'active':currentLineNum===index}"
+                >
+                  {{ line.txt }}
+                </p>
+              </div>
+            </div>
+          </scroll>
         </div>
         <div class="bottom">
+          <div class="dot-wrapper">
+            <span class="dot" :class="{'active':playPageShow==='cd'}" />
+            <span class="dot" :class="{'active':playPageShow==='lyric'}" />
+          </div>
           <div class="progress-wrap">
             <span class="time time-l">{{ currentTime | filterTime(this) }}</span>
             <div class="progress-bar-warp">
@@ -96,6 +115,8 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
+import { getLyricById } from '@/api/song'
+import Lyric from 'lyric-parser'
 const Animation = require('create-keyframe-animation')
 import Utils from '@/utils'
 export default {
@@ -115,7 +136,11 @@ export default {
       // 是否可以播放
       readyPlay: false,
       // 当前播放时间
-      currentTime: 0
+      currentTime: 0,
+      // 当前歌词-对象
+      currentLyric: null,
+      // 当前歌词播放所在行
+      currentLineNum: 0
     }
   },
   computed: {
@@ -169,6 +194,7 @@ export default {
         this.$nextTick(() => {
           this.$refs.audioRef.play()
         })
+        this.getLyric()
       },
       deep: true
     }
@@ -197,6 +223,36 @@ export default {
         len++
       }
       return val
+    },
+    /**
+     * 获取歌词
+     */
+    getLyric() {
+      getLyricById(this.currentSong.id).then((res) => {
+        const tempLyric = function(lrc) {
+          var t = document.createElement('div')
+          t.innerHTML = lrc + ''
+          return t.innerHTML
+        }
+        this.currentLyric = new Lyric(tempLyric(res.lyric), this.handleLyric)
+        if (this.playing) {
+          this.currentLyric.play()
+        }
+      })
+    },
+    /**
+     * 设置歌词回调方法
+     * @param lineNum 行数
+     * @param txt 文字
+     */
+    handleLyric({ lineNum, txt }) {
+      if (!this.$refs.lyricLineRef) return
+      this.currentLineNum = lineNum
+      if (lineNum > 5) {
+        this.$refs.lyricScrollRef.scrollToElement(this.$refs.lyricLineRef[lineNum - 5], 1000)
+      } else {
+        this.$refs.lyricScrollRef.scrollTo(0, 0, 1000)
+      }
     },
     /**
      * 切换全屏显示状态
@@ -467,6 +523,15 @@ export default {
         bottom:170px;
         left:0;
         right:0;
+        display:flex;
+        flex-wrap:nowrap;
+        justify-content: flex-start;
+        align-items: flex-start;
+        .middle-left,.middle-right{
+          flex:0 0 100%;
+          overflow: hidden;
+          height:100%;
+        }
         .cd-wrap{
           width:100%;
           height:0;
@@ -501,6 +566,15 @@ export default {
           margin-top:$xl;
           color:var(--font-color-third);
           font-size:$font_medium;
+        }
+        .middle-right .lyric-text{
+          color:var(--font-color-third);
+          font-size:$font_small;
+          text-align: center;
+          line-height: $xl;
+          &.active{
+            color:var(--font-color-active);
+          }
         }
       }
       .bottom{

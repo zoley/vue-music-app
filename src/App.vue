@@ -9,7 +9,7 @@
   </div>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -36,6 +36,17 @@ export default {
   },
   mounted() {
     document.documentElement.setAttribute('data-theme', this.dataTheme)
+    // window.addEventListener('beforeunload', (e) => {})
+    this.SET_FULL_SCREEN(false)
+    this.SET_PLAYING_STATE(false)
+    this.SET_PLAY_LIST([])
+  },
+  methods: {
+    ...mapMutations('song', [
+      'SET_FULL_SCREEN',
+      'SET_PLAYING_STATE',
+      'SET_PLAY_LIST'
+    ])
   }
 }
 </script>

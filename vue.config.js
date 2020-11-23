@@ -55,6 +55,11 @@ module.exports = {
         changeOrigin: true, // 是否跨域
         pathRewrite: {
           '^/api': ''
+        },
+        // 突破host和origin的限制
+        headers: {
+          referer: 'https://y.qq.com/',
+          origin: 'https://y.qq.com'
         }
       },
       '/pc': { // 代理url关键字
