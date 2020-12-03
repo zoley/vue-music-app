@@ -51,9 +51,11 @@
 
 <script>
 import { getSingerList } from '@/api/singer'
-import Utils from '@/utils'
 import { mapMutations } from 'vuex'
+import { playListMixin } from '@/utils/mixin'
+import Utils from '@/utils'
 export default {
+  mixins: [playListMixin],
   data() {
     return {
       // 歌手列表
@@ -125,6 +127,15 @@ export default {
     ...mapMutations({
       setCurrentSinger: 'singer/SET_CURRENT_SINGER'
     }),
+    /**
+     * 处理播放器最小化后列表的高度滚动问题
+     * @param {*} list
+     */
+    handlePlayListHeight(list) {
+      const className = list.length > 0 ? 'singer-content playing' : 'singer-content'
+      this.$refs.singerScroll.$el.className = className
+      this.$refs.singerScroll.refresh()
+    },
     /**
      * computed里面不能直接对data赋值，写在方法里
      * @param height 高度
@@ -257,6 +268,9 @@ export default {
     height: calc(100vh - 84px);
     overflow: hidden;
     position: relative;
+    &.playing{
+      height: calc(100vh - 84px - 60px);
+    }
     .li-parent{
       .h2{
         padding: $xs $sm;

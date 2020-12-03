@@ -1,6 +1,6 @@
 <template>
   <div class="recommend-wrap">
-    <scroll ref="scroll" :scroll-data="discList" class="recommend-content">
+    <scroll ref="recommendScroll" :scroll-data="discList" class="recommend-content">
       <div>
         <div v-if="recommends.length" class="slider-box">
           <slider>
@@ -37,7 +37,9 @@
 
 <script>
 import { getBanner, getSheetList } from '@/api/recommend'
+import { playListMixin } from '@/utils/mixin'
 export default {
+  mixins: [playListMixin],
   data() {
     return {
       recommends: [],
@@ -52,6 +54,15 @@ export default {
     this._getSheetList()
   },
   methods: {
+    /**
+     * 处理播放器最小化后列表的高度滚动问题
+     * @param {*} list
+     */
+    handlePlayListHeight(list) {
+      const className = list.length > 0 ? 'recommend-content playing' : 'recommend-content'
+      this.$refs.recommendScroll.$el.className = className
+      this.$refs.recommendScroll.refresh()
+    },
     // 请求轮播图片并初始化this.recommends
     _getRecommend() {
       getBanner().then(res => {
@@ -70,7 +81,7 @@ export default {
     loadImage() {
       if (!this.imgChecked) {
         this.imgChecked = true
-        this.$refs.scroll.refresh()
+        this.$refs.recommendScroll.refresh()
       }
     }
   }
@@ -82,6 +93,9 @@ export default {
   .recommend-content {
     height: calc(100vh - 84px);
     overflow: hidden;
+    &.playing{
+      height: calc(100vh - 84px - 60px);
+    }
     .recommend-list {
       > .h3 {
         text-align: center;

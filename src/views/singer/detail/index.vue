@@ -28,9 +28,11 @@
 <script>
 import { getSingerDetailById } from '@/api/singer'
 import { mapState, mapActions } from 'vuex'
+import { playListMixin } from '@/utils/mixin'
 import Utils from '@/utils/index'
 const NAV_HEIGHT = 44
 export default {
+  mixins: [playListMixin],
   data() {
     return {
       // 歌手mid
@@ -99,6 +101,15 @@ export default {
       'SELECT_SONG_PLAY',
       'RANDOM_SONG_PLAY'
     ]),
+    /**
+     * 处理播放器最小化后列表的高度滚动问题
+     * @param {*} list
+     */
+    handlePlayListHeight(list) {
+      const bottom = list.length > 0 ? '60px' : 0
+      this.$refs.songListRef.$el.style.bottom = bottom
+      this.$refs.songListRef.refresh()
+    },
     /**
      * 获取歌手详情页
      */
