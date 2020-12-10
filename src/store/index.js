@@ -4,6 +4,7 @@ import createPersistedState from 'vuex-persistedstate'
 
 import user from './modules/user'
 import singer from './modules/singer'
+import disc from './modules/disc'
 import song from './modules/song'
 
 Vue.use(Vuex)
@@ -25,6 +26,7 @@ const store = new Vuex.Store({
   modules: {
     user,
     singer,
+    disc,
     song
   },
   plugins

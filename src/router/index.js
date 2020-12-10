@@ -15,39 +15,44 @@ const routes = [
     path: '/',
     redirect: '/recommend',
     component: Layout,
-    name: 'layout',
+    name: 'Layout',
     children: [
       {
         path: '/recommend',
-        name: 'recommend',
+        name: 'Recommend',
         component: Recommend
       },
       {
         path: '/ranking',
-        name: 'ranking',
+        name: 'Ranking',
         component: () => import('../views/ranking/index')
       },
       {
         path: '/singer',
-        name: 'singer',
+        name: 'Singer',
         component: () => import('../views/singer/index')
       },
       {
         path: '/search',
-        name: 'search',
+        name: 'Search',
         component: () => import('../views/search/index')
       }
     ]
   },
   {
     path: '/mine',
-    name: 'mine',
+    name: 'Mine',
     component: () => import('../views/mine/index')
   },
   {
     path: '/singer/detail/:mid',
-    name: 'singerDetail',
+    name: 'SingerDetail',
     component: () => import('../views/singer/detail/index')
+  },
+  {
+    path: '/recommend/detail/:discId',
+    name: 'RecommendDetail',
+    component: () => import('../views/recommend/detail/index')
   },
   { path: '*', redirect: '/404', hidden: true }
 ]

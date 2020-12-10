@@ -16,7 +16,7 @@
             KTV热歌推荐
           </h3>
           <ul class="ul">
-            <li v-for="(item,index) in discList" :key="index" v-fb="{cls:'tap-active'}" class="li z-flex">
+            <li v-for="(item,index) in discList" :key="index" v-fb="{cls:'tap-active'}" class="li z-flex" @click="viewDetail(item)">
               <div class="media-img">
                 <img v-lazy="item.cover_url_small">
               </div>
@@ -38,6 +38,7 @@
 <script>
 import { getBanner, getSheetList } from '@/api/recommend'
 import { playListMixin } from '@/utils/mixin'
+import { mapMutations } from 'vuex'
 export default {
   mixins: [playListMixin],
   data() {
@@ -54,6 +55,9 @@ export default {
     this._getSheetList()
   },
   methods: {
+    ...mapMutations({
+      setCurrentDisc: 'disc/SET_CURRENT_DISC'
+    }),
     /**
      * 处理播放器最小化后列表的高度滚动问题
      * @param {*} list
@@ -83,6 +87,14 @@ export default {
         this.imgChecked = true
         this.$refs.recommendScroll.refresh()
       }
+    },
+    /**
+     * 跳转详情
+     * @param item 数据对象
+     */
+    viewDetail(item) {
+      this.setCurrentDisc(item)
+      this.$router.push({ path: '/recommend/detail/' + item.tid })
     }
   }
 }

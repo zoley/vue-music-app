@@ -1,35 +1,35 @@
 <template>
-  <music-list :title="currentSinger.name" :background-url="currentSinger.avatar" :song-list="songList" />
+  <music-list :title="currentDisc.title" :background-url="currentDisc.cover_url_medium" :song-list="songList" />
 </template>
 
 <script>
-import { getSingerDetailById } from '@/api/singer'
+import { getDiscContentList } from '@/api/recommend'
 import { mapState } from 'vuex'
 import Utils from '@/utils/index'
 export default {
   data() {
     return {
       // 歌手mid
-      mid: this.$route.params.mid,
+      discId: this.$route.params.discId,
       // 歌曲列表
       songList: []
     }
   },
   computed: {
     ...mapState({
-      currentSinger: state => state.singer.currentSinger
+      currentDisc: state => state.disc.currentDisc
     })
   },
   created() {
-    // 获取歌手详情页
+    // 获取推荐歌单详情页
     this.getDetailData()
   },
   methods: {
     /**
-     * 获取歌手详情页
+     * 获取推荐歌单详情页
      */
     getDetailData() {
-      getSingerDetailById(this.mid).then((res) => {
+      getDiscContentList(this.discId).then((res) => {
         if (res.code === 0) {
           // ☆☆☆☆☆☆☆小难点☆☆☆☆☆☆☆☆
           Utils.handleSongUrl(res.data.list.filter(y => this.isValidMusic(y.musicData)).map(x => Utils.createNewSong(x.musicData))).then(songs => {
