@@ -1,4 +1,4 @@
-import { commonParams, options } from './config'
+import { commonParams } from './config'
 import jsonp from '@/utils/jsonp'
 import request from '@/utils/request'
 
@@ -73,6 +73,10 @@ export function getSheetList() {
 }
 
 // 获取歌单歌曲列表
+const diyOption = {
+  param: 'jsonpCallback',
+  prefix: 'callback'
+}
 export function getDiscContentList(disstid) {
   const url = '/api/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg'
   const data = Object.assign({}, commonParams, {
@@ -87,5 +91,5 @@ export function getDiscContentList(disstid) {
     new_format: 1,
     disstid
   })
-  return jsonp(url, data, options)
+  return jsonp(url, data, diyOption)
 }

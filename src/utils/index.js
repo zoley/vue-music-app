@@ -42,8 +42,8 @@ function createNewSong(musicData) {
     }
   }
   return new Song({
-    id: musicData.songid,
-    mid: musicData.songmid,
+    id: musicData.songid || musicData.id,
+    mid: musicData.songmid || musicData.mid,
     singer: filterSinger(musicData.singer),
     name: musicData.songname,
     album: musicData.albumname,
