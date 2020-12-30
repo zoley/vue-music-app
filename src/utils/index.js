@@ -45,30 +45,29 @@ function createNewSong(musicData) {
     id: musicData.songid || musicData.id,
     mid: musicData.songmid || musicData.mid,
     singer: filterSinger(musicData.singer),
-    name: musicData.songname,
-    album: musicData.albumname,
+    name: musicData.songname || musicData.name,
+    album: musicData.albumname || musicData.album.name,
     duration: musicData.interval,
-    image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`,
+    image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid || musicData.album.mid}.jpg?max_age=2592000`,
     url: musicData.url
   })
 }
 
 /**
- *
+ * 获取歌曲播放地址
  * @param {*} songs
  */
-function handleSongUrl(songs) {
+async function handleSongUrl(songs) {
   if (!songs.length) {
     return Promise.resolve(songs)
   }
-  return getRealSongUrl(songs).then((res) => {
-    const info = res.url_mid.data.midurlinfo
-    info.forEach((x, i) => {
-      const song = songs[i]
-      song.url = `http://dl.stream.qqmusic.qq.com/${x.purl}`
-    })
-    return songs
+  const res = await getRealSongUrl(songs)
+  const info = res.url_mid.data.midurlinfo
+  info.forEach((x, i) => {
+    const song = songs[i]
+    song.url = `http://dl.stream.qqmusic.qq.com/${x.purl}`
   })
+  return songs
 }
 
 /**

@@ -33,7 +33,7 @@ export default {
         if (res.code === 0) {
           const list = res.cdlist[0].songlist
           // ☆☆☆☆☆☆☆小难点☆☆☆☆☆☆☆☆
-          Utils.handleSongUrl(list.filter(y => this.isValidMusic(y)).map(x => {console.log(x);return Utils.createNewSong(x)})).then(songs => {
+          Utils.handleSongUrl(list.filter(y => this.isValidMusic(y)).map(x => Utils.createNewSong(x))).then(songs => {
             this.songList = songs
           })
         }
@@ -44,7 +44,7 @@ export default {
      * @param musicData 音乐数据
      */
     isValidMusic(musicData) {
-      return musicData.id && musicData.albummid && (!musicData.pay || musicData.pay.payplay === 0)
+      return musicData.id && musicData.album.mid && (!musicData.pay || musicData.pay.pay_play === 0)
     }
   }
 }

@@ -16,8 +16,11 @@ export function getBanner() {
   })
 }
 
-// 获取KTV热歌歌单
-export function getSheetList() {
+/**
+ * 获取歌单 // 1-国语 3-英语 9-寂寞 74-伤感 71-情歌 49-轻音乐 59-经典 3056-网络歌曲
+ * @param typeId
+ */
+export function getSheetList(typeId = 1) {
   const url = '/pc/cgi-bin/musicu.fcg'
   const data = Object.assign({}, commonParams, {
     loginUin: 0,
@@ -31,7 +34,7 @@ export function getSheetList() {
       'playlist': {
         'method': 'get_playlist_by_category',
         'param': {
-          'id': 1, // 1-国语 3-英语 9-寂寞 74-伤感 71-情歌 49-轻音乐 59-经典 3056-网络歌曲
+          'id': typeId, // 1-国语 3-英语 9-寂寞 74-伤感 71-情歌 49-轻音乐 59-经典 3056-网络歌曲
           'curPage': 1,
           'size': 40,
           'order': 5,

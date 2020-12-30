@@ -13,7 +13,7 @@
         </div>
         <div class="recommend-list">
           <h3 class="h3">
-            KTV热歌推荐
+            热歌推荐
           </h3>
           <ul class="ul">
             <li v-for="(item,index) in discList" :key="index" v-fb="{cls:'tap-active'}" class="li z-flex" @click="viewDetail(item)">
@@ -75,8 +75,12 @@ export default {
     },
     // 请求推荐歌单并初始化this.discList
     _getSheetList() {
-      getSheetList().then(res => {
-        this.discList = res.playlist.data.v_playlist
+      // 1-国语 3-英语 9-寂寞 74-伤感 71-情歌 49-轻音乐 59-经典 3056-网络歌曲
+      getSheetList(1).then(res => {
+        const tempList = res.playlist.data.v_playlist
+        getSheetList(74).then(res => {
+          this.discList = res.playlist.data.v_playlist.concat(tempList)
+        })
       })
     },
     /*

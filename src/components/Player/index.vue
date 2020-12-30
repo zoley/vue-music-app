@@ -35,7 +35,7 @@
           </div>
           <scroll ref="lyricScrollRef" class="middle-right" :scroll-data="currentLyric && currentLyric.lines">
             <div class="lyric-wrapper">
-              <div v-if="currentLyric" class="lyric-box">
+              <div v-if="currentLyric && currentLyric.lines.length>0" class="lyric-box">
                 <p
                   v-for="(line,index) in currentLyric.lines"
                   :key="index"
@@ -45,6 +45,9 @@
                 >
                   {{ line.txt }}
                 </p>
+              </div>
+              <div v-else class="lyric-box">
+                <p class="lyric-text pure">{{ playingLyric }}</p>
               </div>
             </div>
           </scroll>
@@ -243,9 +246,17 @@ export default {
           return t.innerHTML
         }
         this.currentLyric = new Lyric(tempLyric(res.lyric), this.handleLyric)
+        if (this.currentLyric && this.currentLyric.lines.length < 1) {
+          this.playingLyric = '纯音乐，请欣赏！'
+          return
+        }
         if (this.playing) {
           this.currentLyric.play()
         }
+      }).catch(() => {
+        this.currentLyric = null
+        this.playingLyric = ''
+        this.currentLineNum = 0
       })
     },
     /**
@@ -669,6 +680,10 @@ export default {
           line-height: $xl;
           &.active{
             color:var(--font-color-active);
+          }
+          &.pure{
+            line-height:300px;
+            font-size:$font_huge;
           }
         }
       }
