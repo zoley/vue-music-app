@@ -4,6 +4,13 @@ const service = axios.create({
   baseURL: '/',
   timeout: 3000
 })
+
+function getContentType(config) {
+  if (config.data && config.data.formData) {
+    return 'multipart/form-data'
+  }
+  return 'application/json; charset=UTF-8'
+}
 /*
  * ## Interceptors
  * You can intercept requests or responses before they are handled by `then` or `catch`.
@@ -14,18 +21,8 @@ service.interceptors.request.use((config) => {
    * config.headers['TBase-Access-Origin'] = getAccessOrigin()
    * config.headers['TBase-Access-Token'] = getToken()
    */
-  if (config.headers.json) {
-    config.headers['Content-Type'] = 'application/json'
-  } else {
-    config['transformRequest'] = [function(data) {
-      if (!data) return undefined
-      const formData = new FormData()
-      for (const key in data) {
-        formData.append(key, data[key])
-      }
-      return formData
-    }]
-  }
+
+  config.headers['Content-Type'] = getContentType(config)
   return config
 }, function(error) {
   // Do something with request error

@@ -54,6 +54,11 @@ const routes = [
     name: 'RecommendDetail',
     component: () => import('../views/recommend/detail/index')
   },
+  {
+    path: '/ranking/detail/:topId',
+    name: 'RankingDetail',
+    component: () => import('../views/ranking/detail/index')
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 

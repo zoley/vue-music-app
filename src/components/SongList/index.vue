@@ -5,15 +5,21 @@
         v-for="(item,index) in listData"
         :key="index"
         v-fb="{cls:'tap-active'}"
-        class="li"
+        class="li z-flex"
         @click="selectItem(item,index)"
       >
-        <h3 class="name">
-          {{ item.name }}
-        </h3>
-        <p class="desc">
-          {{ item.singer }} - {{ item.album }}
-        </p>
+        <div v-if="ranking" class="ranking">
+          <i v-if="index<3" class="iconfont i-jiangbei" :class="'rank'+(index+1)" />
+          <i v-else class="num">{{ index+1 }}</i>
+        </div>
+        <div class="li-content">
+          <h3 class="name">
+            {{ item.name }}
+          </h3>
+          <p class="desc">
+            {{ item.singer }} - {{ item.album }}
+          </p>
+        </div>
       </li>
     </ul>
   </div>
@@ -23,6 +29,15 @@
 export default {
   name: 'SongList',
   components: {
+  },
+  // 接收父组件的注入函数---进度条相关
+  inject: {
+    ranking: {
+      type: Boolean,
+      default() {
+        return false
+      }
+    }
   },
   props: {
     // 数据列表
@@ -59,6 +74,7 @@ export default {
   .song-list-wrap{
     .li{
       padding:$xs $sm;
+      .li-content{flex:1;}
       .name{
         margin-bottom: $xs;
         white-space: nowrap;
@@ -71,6 +87,27 @@ export default {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+      }
+      .ranking{
+        margin-right:$sm;
+        width:$font_vast;
+        text-align: center;
+        .iconfont{
+          font-size:$font_vast;
+        }
+        .rank1{
+          color:$golden;
+        }
+        .rank2{
+          color:$light-gray;
+        }
+        .rank3{
+          color:$orange;
+        }
+        .num{
+          font-size:$font_medium;
+          color:var(--font-color-active);
+        }
       }
     }
   }
