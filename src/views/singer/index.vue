@@ -22,7 +22,7 @@
             <li
               v-for="(item,index) in group.items"
               :key="item.name+index"
-              v-fb="{cls:'tap-active'}"
+              v-ripple
               class="li-child"
               @click="viewDetail(item)"
             >

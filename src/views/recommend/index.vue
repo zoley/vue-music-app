@@ -76,9 +76,9 @@ export default {
     // 请求推荐歌单并初始化this.discList
     _getSheetList() {
       // 1-国语 3-英语 9-寂寞 74-伤感 71-情歌 49-轻音乐 59-经典 3056-网络歌曲
-      getSheetList(1).then(res => {
+      getSheetList(74).then(res => {
         const tempList = res.playlist.data.v_playlist
-        getSheetList(74).then(res => {
+        getSheetList(1).then(res => {
           this.discList = res.playlist.data.v_playlist.concat(tempList)
         })
       })

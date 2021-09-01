@@ -117,6 +117,18 @@ export default {
         justify-content: center;
       }
     }
+    .center-wrap{
+      overflow: hidden;
+      justify-content: center;
+      width:calc(100% - 100px);
+      .title{
+        max-width:100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: center;
+      }
+    }
   }
   &.immerse{
     position:fixed;

@@ -10,8 +10,10 @@ import './assets/css/base.scss' // 全局样式
 import '@/utils/component' // 引入全局注册的自定义组件
 
 import vueFeedback from './utils/feedback' // 触摸反馈 <button v-fb>按钮</button>  /  <button v-fb="{cls:'buttonActive'}"
+import TouchRipple from './utils/ripple' // 触摸反馈 <button v-fb>按钮</button>  /  <button v-fb="{cls:'buttonActive'}"
 import VueLazyload from 'vue-lazyload' // 图片懒加载
 Vue.use(vueFeedback)
+Vue.use(TouchRipple)
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   error: require('@/assets/image/mouse.png'),
