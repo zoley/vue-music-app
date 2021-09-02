@@ -16,7 +16,7 @@
             热歌推荐
           </h3>
           <ul class="ul">
-            <li v-for="(item,index) in discList" :key="index" v-fb="{cls:'tap-active'}" class="li z-flex" @click="viewDetail(item)">
+            <li v-for="(item,index) in discList" :key="index" v-ripple="{color:'var(--font-color-active)'}" class="li z-flex" @click="viewDetail(item)">
               <div class="media-img">
                 <img v-lazy="item.cover_url_small">
               </div>

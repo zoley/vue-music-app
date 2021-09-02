@@ -10,19 +10,14 @@
   var vueTouchRipple = function(Vue) {
     var touchRipple = {
       bind: function(el, binding) {
-        console.log(binding)
         var value = binding.value
         on(el, 'touchstart', handleStart.bind(null, el, value))
-        on(el, 'touchmove', handleEnd.bind(null, el, value))
         on(el, 'touchend', handleEnd.bind(null, el, value))
-        on(el, 'touchcancel', handleEnd.bind(null, el, value))
       },
       unbind: function(el, binding) {
         var value = binding.value
         off(el, 'touchstart', handleStart.bind(null, el, value))
-        off(el, 'touchmove', handleEnd.bind(null, el, value))
         off(el, 'touchend', handleEnd.bind(null, el, value))
-        off(el, 'touchcancel', handleEnd.bind(null, el, value))
       }
     }
     Vue.directive('ripple', touchRipple)
@@ -37,7 +32,7 @@
     el.removeEventListener(eventName, fn, false)
   }
 
-  function handleStart(el, cls) {
+  function handleStart(el, value, event) {
     clearTimeout(timer)
     timer = setTimeout(function() {
       locked = true
@@ -47,20 +42,26 @@
         container,
         event
       )
-      console.log(x, y, centerX, centerY, size)
+      // console.log(x, y, centerX, centerY, size)
       const ripple = document.createElement('div')
-      ripple.classList.add('my-ripple')
-      ripple.style.opacity = `0`
-      ripple.style.transform = `translate(${x}px, ${y}px) scale3d(.3, .3, .3)` //
-      ripple.style.width = `${size}px`
-      ripple.style.height = `${size}px`
+      addClass(ripple, 'my-ripple')
+      setStyle(ripple, {
+        opacity: 0,
+        transform: `translate(${x}px, ${y}px) scale3d(.3, .3, .3)`,
+        width: `${size}px`,
+        height: `${size}px`
+      })
+      if (value && value.hasOwnProperty('color')) {
+        setStyle(ripple, {
+          backgroundColor: value.color
+        })
+      }
       // 记录水波的创建时间
       ripple.dataset.createdAt = String(performance.now())
 
       const { position } = window.getComputedStyle(container)
       container.style.overflow = 'hidden'
-      position === 'static' && (this.style.position = 'relative')
-      console.log(ripple)
+      position === 'static' && (container.style.position = 'relative')
       container.appendChild(ripple)
 
       window.setTimeout(() => {
@@ -71,11 +72,11 @@
     , 20)
   }
 
-  function handleEnd(el, cls) {
+  function handleEnd(el, value, event) {
     clearTimeout(timer)
     if (!locked) return
     locked = false
-    const container = this
+    const container = el
     const ripples = container.querySelectorAll('.my-ripple')
     if (!ripples.length) {
       return
@@ -94,13 +95,13 @@
   function computeRippleStyles(element, event) {
     const { top, left } = element.getBoundingClientRect()
     const { clientWidth, clientHeight } = element
-
+    const touchEvent = event.touches[0]
     const radius = Math.sqrt(clientWidth ** 2 + clientHeight ** 2) / 2
     const size = radius * 2
-    console.log(top, left, clientWidth, clientHeight, size)
-    const localX = event.clientX - left
-    const localY = event.clientY - top
+    const localX = touchEvent.clientX - left
+    const localY = touchEvent.clientY - top
 
+    // console.log(top, left, clientWidth, clientHeight, size, localX, localY, radius)
     const centerX = (clientWidth - radius * 2) / 2
     const centerY = (clientHeight - radius * 2) / 2
 
