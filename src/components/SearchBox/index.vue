@@ -18,8 +18,10 @@ export default {
       searchKey: ''
     }
   },
-  mounted() {
-
+  created() {
+    this.$watch('searchKey', val => {
+      this.$emit('getSearchKey', val)
+    })
   },
   methods: {
     /**
@@ -32,7 +34,7 @@ export default {
      * 搜索
      */
     doSearch() {
-      this.$emit('sendSearch', this.searchKey)
+      this.$emit('goToSearch', this.searchKey)
     }
   }
 }
